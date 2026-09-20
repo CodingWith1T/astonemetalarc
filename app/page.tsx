@@ -1,7 +1,6 @@
 export default function Home() {
   return (
     <>
-
       <section className="section hero">
         <div className="hero-content-box">
           <div className="hero-content-top">
@@ -9,21 +8,23 @@ export default function Home() {
               <div className="hero-heading-text-box">
                 <h1 data-animation="blur-stagger" className="heading-1 white">Leading PEB Manufacturers in Uttar Pradesh &amp; India
                 </h1>
-                <div className="button-text-box slide-up"><a href="/contact" className="button w-inline-block">
-                  <div className="text-icon-box">
-                    <div className="text-icon-content"><img loading="lazy"
-                      src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
-                      className="button-arrow-icon" /><img loading="lazy"
+                <div className="button-text-box slide-up">
+                  <a href="/contact" className="button w-inline-block">
+                    <div className="text-icon-box">
+                      <div className="text-icon-content"><img loading="lazy"
                         src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
-                        className="button-arrow-icon second" />
-                      <p className="button-text">Get in Touch</p>
+                        className="button-arrow-icon" /><img loading="lazy"
+                          src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
+                          className="button-arrow-icon second" />
+                        <p className="button-text">Get in Touch</p>
+                      </div>
                     </div>
-                  </div>
-                </a>
+                  </a>
                   <div className="text-box _400">
                     <p className="hero-description">We design, manufacture &amp; erect Pre Engineered Buildings, industrial sheds, mezzanine floors, prefab cold storage, PEB cargo sheds &amp; commercial warehouses across India and worldwide.</p>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -34,10 +35,12 @@ export default function Home() {
                   <p className="hero-rating fade-in">ASTONE METAL ARC</p>
                   <div className="avatars-stat-box">
                     {/* <div className="clients-avatars-row">
-                    <div className="client-avatar-box"><img sizes="100vw"
+                    <div className="client-avatar-box">
+                    <img sizes="100vw"
                       srcSet="images/6a1c49f097e85d36dc9905b3_Harry%2520Bender-p-500.webp 500w, images/6a1c49f097e85d36dc9905b3_Harry%20Bender.webp 640w"
                       alt="" src="images/6a1c49f097e85d36dc9905b3_Harry%20Bender.webp" loading="lazy"
-                      className="client-avatar-image" /></div>
+                      className="client-avatar-image" />
+                      </div>
                     <div className="client-avatar-box"><img sizes="100vw"
                       srcSet="images/6a1c49f097e85d36dc9905b2_Ayah%2520Wilkinson-p-500.webp 500w, images/6a1c49f097e85d36dc9905b2_Ayah%20Wilkinson.webp 640w"
                       alt="" src="images/6a1c49f097e85d36dc9905b2_Ayah%20Wilkinson.webp" loading="lazy"
@@ -53,6 +56,33 @@ export default function Home() {
                     <div><img src="images/6a1c49f097e85d36dc9905b5_Stars.svg" loading="lazy" alt="" className="stars" />
                       <p className="clients-avatars-text"><span className="client-number">1000+ </span>clients worldwide</p>
                     </div>
+                  </div>
+                </div>
+                <div className="button-text-box slide-up">
+                  <div className="download-buttons-box">
+                    <a href="/pdf/Astone_Metal_Arc_Boucher.pdf" className="button w-inline-block" download>
+                      <div className="text-icon-box">
+                        <div className="text-icon-content"><img loading="lazy"
+                          src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
+                          className="button-arrow-icon" /><img loading="lazy"
+                            src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
+                            className="button-arrow-icon second" />
+                          <p className="button-text">Download Brochure</p>
+                        </div>
+                      </div>
+                    </a>
+                    <br />
+                    <a href="/pdf/Astone_Metal_Arc_PROFILE.pdf" className="button w-inline-block" download>
+                      <div className="text-icon-box">
+                        <div className="text-icon-content"><img loading="lazy"
+                          src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
+                          className="button-arrow-icon" /><img loading="lazy"
+                            src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
+                            className="button-arrow-icon second" />
+                          <p className="button-text">Company Profile</p>
+                        </div>
+                      </div>
+                    </a>
                   </div>
                 </div>
                 <div className="hero-stat-box fade-in">
@@ -103,10 +133,12 @@ export default function Home() {
               </div>
             </div>
             <div className="about-us-bottom slide-up">
-              <div className="about-us-image-box"><img src="images/6a1c49f097e85d36dc9905c6_About%20us%20Img.webp"
-                loading="lazy" sizes="100vw"
-                srcSet="images/6a1c49f097e85d36dc9905c6_About%2520us%2520Img-p-500.webp 500w, images/6a1c49f097e85d36dc9905c6_About%2520us%2520Img-p-800.webp 800w, images/6a1c49f097e85d36dc9905c6_About%20us%20Img.webp 1228w"
-                alt="" className="about-us-image" /></div>
+              <div className="about-us-image-box">
+                <img src="/astoneImages/warehouse_1.jpeg"
+                  loading="lazy" sizes="100vw"
+                  srcSet="/astoneImages/warehouse_1.jpeg 500w, /astoneImages/warehouse_1.jpeg 800w, /astoneImages/warehouse_1.jpeg 1228w"
+                  alt="" className="about-us-image" />
+              </div>
               <div className="about-us-stats-box">
                 <div className="about-us-stat-box deep-blue">
                   <p className="about-us-stat-name white">satisfied clients worldwide</p>
@@ -120,9 +152,9 @@ export default function Home() {
                   <p className="about-us-stat-name white">clients worldwide</p>
                   <p data-suffix="+" data-target="1000" className="about-us-stat-number white stat-number">1000+</p>
                 </div>
-                <div className="about-us-small-image-box"><img src="images/6a1c49f097e85d36dc9905c7_About%20us%20Img%202.webp"
+                <div className="about-us-small-image-box"><img src="/astoneImages/PEB_shade_3.jpeg"
                   loading="lazy" sizes="100vw"
-                  srcSet="images/6a1c49f097e85d36dc9905c7_About%2520us%2520Img%25202-p-500.webp 500w, images/6a1c49f097e85d36dc9905c7_About%20us%20Img%202.webp 654w"
+                  srcSet="/astoneImages/PEB_shade_3.jpeg 500w, /astoneImages/PEB_shade_3.jpeg 800w, /astoneImages/PEB_shade_3.jpeg 1228w"
                   alt="" className="about-us-image" /></div>
               </div>
             </div>
@@ -300,7 +332,7 @@ export default function Home() {
             <div className="projects-top slide-up">
               <div className="subtitle-heading-box center">
                 <p data-wf--subtitle--variant="base" className="subtitle">OUR PROJECTS</p>
-                <h2 className="heading-2">Delivering Steel Excellence Across India</h2>
+                <h2 className="heading-2">Delivering Steel Excellence Across Borders</h2>
               </div>
             </div>
             <div className="projects-bottom">
@@ -308,27 +340,84 @@ export default function Home() {
                 <div className="single-project-wrapper w-dyn-list">
                   <div role="list" className="single-project w-dyn-items">
                     <div role="listitem" className="single-project-item w-dyn-item">
+
                       <div className="single-project-content-box">
-                        <div className="project-content-top"><a href="/projects-category/industrial"
-                          className="single-project-category">Industrial</a>
-                          <h3 className="single-project-name">Large-Span Industrial Shed</h3>
-                          <p className="paragraph medium">A wide-span PEB industrial shed engineered for heavy manufacturing operations — column-free interior, high load capacity, and rapid site erection.</p>
-                        </div><a href="/projects/industrial-shed" className="button w-inline-block">
+                        <div className="project-content-top">
+
+                          <a
+                            href="/projects-category/government-institutional"
+                            className="single-project-category"
+                          >
+                            Government & Institutional
+                          </a>
+
+                          <h3 className="single-project-name">
+                            Coast Guard Administrative Building – Liberia
+                          </h3>
+
+                          <p className="paragraph medium">
+                            A modern pre-engineered building (PEB) administrative facility
+                            at the Coast Guard Base, Bushrod Island, Monrovia, Liberia.
+                            The project combines a contemporary architectural façade with
+                            a high-performance steel building system, designed for a
+                            functional and durable administrative environment.
+                          </p>
+                          <div className="project-details">
+                            <p><strong>AREA:</strong> 90,000 SQ FT</p>
+                            <p><strong>STRUCTURAL STEEL:</strong> 500 MT</p>
+                            <p><strong>COMPLETION TIME:</strong> 6 MONTHS</p>
+                            <p><strong>PROJECT TYPE:</strong> ADMINISTRATIVE BUILDING</p>
+                            <p><strong>STATUS:</strong> CURRENTLY ONGOING</p>
+                          </div>
+                        </div>
+
+                        {/* <a
+                          href="/projects/coast-guard-administrative-building-liberia"
+                          className="button w-inline-block"
+                        >
                           <div className="text-icon-box">
-                            <div className="text-icon-content"><img loading="lazy"
-                              src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
-                              className="button-arrow-icon" /><img loading="lazy"
-                                src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
-                                className="button-arrow-icon second" />
-                              <p className="button-text">VIEW PROJECT</p>
+                            <div className="text-icon-content">
+
+                              <img
+                                loading="lazy"
+                                src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg"
+                                alt=""
+                                className="button-arrow-icon"
+                              />
+
+                              <img
+                                loading="lazy"
+                                src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg"
+                                alt=""
+                                className="button-arrow-icon second"
+                              />
+
+                              <p className="button-text">
+                                VIEW PROJECT
+                              </p>
+
                             </div>
                           </div>
-                        </a>
+                        </a> */}
                       </div>
-                      <div className="single-project-image-box"><img
-                        src="images/6a1c49f097e85d36dc990595_Project%20Img%202.webp" loading="lazy" alt="" sizes="100vw"
-                        srcSet="images/6a1c49f097e85d36dc990595_Project%2520Img%25202-p-500.webp 500w, images/6a1c49f097e85d36dc990595_Project%2520Img%25202-p-800.webp 800w, images/6a1c49f097e85d36dc990595_Project%2520Img%25202-p-1080.webp 1080w, images/6a1c49f097e85d36dc990595_Project%20Img%202.webp 1370w"
-                        className="single-project-image" /></div>
+
+                      <div className="single-project-image-box">
+                        <img
+                          src="/astoneImages/liberia_project.png"
+                          loading="lazy"
+                          alt="Coast Guard Administrative Building, Bushrod Island, Monrovia, Liberia"
+                          sizes="100vw"
+                          srcSet="
+              /astoneImages/liberia_project.png 500w,
+              /astoneImages/liberia_project.png 800w,
+              /astoneImages/liberia_project.png 1080w,
+              /astoneImages/liberia_project.png 1370w
+            "
+                          className="single-project-image"
+                          style={{ objectFit: "contain" }}
+                        />
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -340,24 +429,38 @@ export default function Home() {
                       <div className="single-project-content-box">
                         <div className="project-content-top"><a href="/projects-category/warehouse"
                           className="single-project-category">Warehouse</a>
-                          <h3 className="single-project-name">Commercial Warehouse Complex</h3>
-                          <p className="paragraph medium">A multi-bay steel warehouse complex built for a logistics client — featuring mezzanine floors, loading docks, and insulated roofing for year-round operations.</p>
-                        </div><a href="/projects/commercial-warehouse" className="button w-inline-block">
+                          <h3 className="single-project-name">Industrial Warehouse – Oman</h3>
+                          <p className="paragraph medium">
+                            A 90,000 sq. ft. pre-engineered steel factory shed in Oman,
+                            engineered with 650 MT of structural steel and completed within
+                            a 5-month construction period.
+                          </p>
+                          <div className="project-details">
+                            <p><strong>AREA:</strong> 90,000 SQ FT</p>
+                            <p><strong>STRUCTURAL STEEL:</strong> 650 MT</p>
+                            <p><strong>COMPLETION TIME:</strong> 5 MONTHS</p>
+                            <p><strong>PROJECT TYPE:</strong> FACTORY SHED</p>
+                            <p><strong>STATUS:</strong> SUCCESSFULLY COMPLETED — 2025</p>
+                          </div>
+                        </div>
+                        {/* <a href="/projects/commercial-warehouse" className="button w-inline-block">
                           <div className="text-icon-box">
-                            <div className="text-icon-content"><img loading="lazy"
-                              src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
-                              className="button-arrow-icon" /><img loading="lazy"
+                            <div className="text-icon-content">
+                              <img loading="lazy"
+                                src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
+                                className="button-arrow-icon" />
+                              <img loading="lazy"
                                 src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
                                 className="button-arrow-icon second" />
                               <p className="button-text">VIEW PROJECT</p>
                             </div>
                           </div>
-                        </a>
+                        </a> */}
                       </div>
                       <div id="w-node-_6203bca7-931f-cfd2-7064-8ce612d7f0f0-dc990568"
                         className="single-project-image-box left"><img
-                          src="images/6a1c49f097e85d36dc990596_Project%20Img%201.webp" loading="lazy" alt="" sizes="100vw"
-                          srcSet="images/6a1c49f097e85d36dc990596_Project%2520Img%25201-p-500.webp 500w, images/6a1c49f097e85d36dc990596_Project%2520Img%25201-p-800.webp 800w, images/6a1c49f097e85d36dc990596_Project%2520Img%25201-p-1080.webp 1080w, images/6a1c49f097e85d36dc990596_Project%20Img%201.webp 1370w"
+                          src="astoneImages/oman_project.jpeg" loading="lazy" alt="" sizes="100vw"
+                          srcSet="astoneImages/oman_project.jpeg 500w, astoneImages/oman_project.jpeg 800w, astoneImages/oman_project.jpeg 1080w, astoneImages/oman_project.jpeg 1370w"
                           className="single-project-image" /></div>
                     </div>
                   </div>
@@ -369,10 +472,22 @@ export default function Home() {
                     <div role="listitem" className="single-project-item w-dyn-item">
                       <div className="single-project-content-box">
                         <div className="project-content-top"><a href="/projects-category/cold-storage"
-                          className="single-project-category">Cold Storage</a>
-                          <h3 className="single-project-name">Prefab Cold Storage Facility</h3>
-                          <p className="paragraph medium">A prefabricated cold storage structure for an agricultural client — energy-efficient insulation panels, PEB frame, and rapid assembly with minimal disruption.</p>
-                        </div><a href="/projects/prefab-cold-storage" className="button w-inline-block">
+                          className="single-project-category">Electricals</a>
+                          <h3 className="single-project-name">Mangal Electricals Private Limited – Jaipur</h3>
+                          <p className="paragraph medium">
+                            A 50,000 sq. ft. administrative building in Jaipur,
+                            engineered with 200 MT of structural steel and scheduled
+                            for completion within a 4-month construction period.
+                          </p>
+                          <div className="project-details">
+                            <p><strong>AREA:</strong> 50,000 SQ FT</p>
+                            <p><strong>STRUCTURAL STEEL:</strong> 200 MT</p>
+                            <p><strong>COMPLETION TIME:</strong> 4 MONTHS</p>
+                            <p><strong>PROJECT TYPE:</strong> ADMINISTRATIVE BUILDING</p>
+                            <p><strong>STATUS:</strong> CURRENTLY ONGOING</p>
+                          </div>
+                        </div>
+                        {/* <a href="/projects/prefab-cold-storage" className="button w-inline-block">
                           <div className="text-icon-box">
                             <div className="text-icon-content"><img loading="lazy"
                               src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
@@ -382,11 +497,11 @@ export default function Home() {
                               <p className="button-text">VIEW PROJECT</p>
                             </div>
                           </div>
-                        </a>
+                        </a> */}
                       </div>
                       <div className="single-project-image-box"><img
-                        src="images/6a1c49f097e85d36dc9905c1_Project%20Img%204.webp" loading="lazy" alt="" sizes="100vw"
-                        srcSet="images/6a1c49f097e85d36dc9905c1_Project%2520Img%25204-p-500.webp 500w, images/6a1c49f097e85d36dc9905c1_Project%2520Img%25204-p-800.webp 800w, images/6a1c49f097e85d36dc9905c1_Project%2520Img%25204-p-1080.webp 1080w, images/6a1c49f097e85d36dc9905c1_Project%20Img%204.webp 1370w"
+                        src="astoneImages/managal_electircal_pvt_ltd_jaipur.png" loading="lazy" alt="" sizes="100vw"
+                        srcSet="astoneImages/managal_electircal_pvt_ltd_jaipur.png 500w, astoneImages/managal_electircal_pvt_ltd_jaipur.png 800w, astoneImages/managal_electircal_pvt_ltd_jaipur.png 1080w, astoneImages/managal_electircal_pvt_ltd_jaipur.png 1370w"
                         className="single-project-image" /></div>
                     </div>
                   </div>
@@ -398,10 +513,22 @@ export default function Home() {
                     <div role="listitem" className="single-project-item flip w-dyn-item">
                       <div className="single-project-content-box">
                         <div className="project-content-top"><a href="/projects-category/cargo"
-                          className="single-project-category">Cargo Shed</a>
-                          <h3 className="single-project-name">PEB Cargo Shed</h3>
-                          <p className="paragraph medium">A large clear-span PEB cargo shed for a logistics terminal — designed with no internal columns for maximum operational flexibility and vehicle movement.</p>
-                        </div><a href="/projects/peb-cargo-shed" className="button w-inline-block">
+                          className="single-project-category">Logistics Warehouse</a>
+                          <h3 className="single-project-name">PEB CARGO SHED</h3>
+                          <p className="paragraph medium">
+                            A 230,000 sq. ft. pre-engineered steel logistics warehouse,
+                            engineered with 960 MT of structural steel and completed within
+                            a 6-month construction period.
+                          </p>
+                          <div className="project-details">
+                            <p><strong>AREA:</strong> 230,000 SQ FT</p>
+                            <p><strong>STRUCTURAL STEEL:</strong> 960 MT</p>
+                            <p><strong>COMPLETION TIME:</strong> 6 MONTHS</p>
+                            <p><strong>PROJECT TYPE:</strong> LOGISTICS WAREHOUSE</p>
+                            <p><strong>STATUS:</strong> SUCCESSFULLY COMPLETED — 2016</p>
+                          </div>
+                        </div>
+                        {/* <a href="/projects/peb-cargo-shed" className="button w-inline-block">
                           <div className="text-icon-box">
                             <div className="text-icon-content"><img loading="lazy"
                               src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
@@ -411,12 +538,12 @@ export default function Home() {
                               <p className="button-text" >VIEW PROJECT</p>
                             </div>
                           </div>
-                        </a>
+                        </a> */}
                       </div>
                       <div id="w-node-_216a3e04-dea0-5b7a-9b10-b37a5f7ac399-dc990568"
                         className="single-project-image-box left"><img
-                          src="images/6a1c49f097e85d36dc990598_Project%20Img%203.webp" loading="lazy" alt="" sizes="100vw"
-                          srcSet="images/6a1c49f097e85d36dc990598_Project%2520Img%25203-p-500.webp 500w, images/6a1c49f097e85d36dc990598_Project%2520Img%25203-p-800.webp 800w, images/6a1c49f097e85d36dc990598_Project%2520Img%25203-p-1080.webp 1080w, images/6a1c49f097e85d36dc990598_Project%20Img%203.webp 1370w"
+                          src="astoneImages/blinkit_project.png" loading="lazy" alt="" sizes="100vw"
+                          srcSet="astoneImages/blinkit_project.png 500w, astoneImages/blinkit_project.png 800w, astoneImages/blinkit_project.png 1080w, astoneImages/blinkit_project.png 1370w"
                           className="single-project-image" /></div>
                     </div>
                   </div>
@@ -481,7 +608,7 @@ export default function Home() {
           <div className="why-us-overlay"></div>
         </div>
       </section>
-      <section className="section testimonials">
+      {/* <section className="section testimonials">
         <div className="container">
           <div className="testimnials-box">
             <div className="testimonials-top">
@@ -839,7 +966,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       <section className="section blog">
         <div className="container">
           <div className="blog-box">

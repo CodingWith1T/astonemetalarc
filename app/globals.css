@@ -3097,7 +3097,7 @@ blockquote {
 
 .hero-background-box {
   z-index: -1;
-  background-image: url("/images/6a1c49f097e85d36dc9905b1_Hero%20Background%20Image.webp");
+  background-image: url("/astoneImages/PEB_shade_2.jpeg");
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -4777,9 +4777,10 @@ blockquote {
 }
 
 .text-marquee-box {
-  width: 100%;
   display: flex;
-  overflow: hidden;
+  width: max-content;
+  animation: marquee 15s linear infinite;
+  will-change: transform;
 }
 
 .marquee-text {
@@ -4794,6 +4795,16 @@ blockquote {
   text-transform: uppercase;
   flex: none;
   padding-right: 150px;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .building-image {
