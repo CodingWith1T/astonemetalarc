@@ -500,8 +500,8 @@ export default function Home() {
                         </a> */}
                       </div>
                       <div className="single-project-image-box"><img
-                        src="astoneImages/managal_electircal_pvt_ltd_jaipur.png" loading="lazy" alt="" sizes="100vw"
-                        srcSet="astoneImages/managal_electircal_pvt_ltd_jaipur.png 500w, astoneImages/managal_electircal_pvt_ltd_jaipur.png 800w, astoneImages/managal_electircal_pvt_ltd_jaipur.png 1080w, astoneImages/managal_electircal_pvt_ltd_jaipur.png 1370w"
+                        src="astoneImages/managal_electircal_pvt_ltd_jaipur_project.png" loading="lazy" alt="" sizes="100vw"
+                        srcSet="astoneImages/managal_electircal_pvt_ltd_jaipur_project.png 500w, astoneImages/managal_electircal_pvt_ltd_jaipur_project.png 800w, astoneImages/managal_electircal_pvt_ltd_jaipur_project.png 1080w, astoneImages/managal_electircal_pvt_ltd_jaipur_project.png 1370w"
                         className="single-project-image" /></div>
                     </div>
                   </div>

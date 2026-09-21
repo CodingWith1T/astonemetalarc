@@ -176,6 +176,28 @@ export default function RootLayout({
         <script src="/js/gsap.min.js" type="text/javascript"></script>
         <script src="/js/ScrollTrigger.min.js" type="text/javascript"></script>
 
+        <script
+          id="google-translate-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: 'en',
+            includedLanguages: 'en,ar,fr,de,es,it,pt,hi',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+          },
+          'google_translate_element'
+        );
+      }
+    `,
+          }}
+        />
+
+        <script
+          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+        />
+
         <Script
           id="gsap-init-script"
           strategy="lazyOnload"

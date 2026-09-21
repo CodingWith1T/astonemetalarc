@@ -47,7 +47,7 @@ export default function Navabr() {
                             </nav>
                         </div>
                     </nav>
-                    <div className="nav-button-wrapper"><a href="https://webflow.com/templates/html/modera-website-template"
+                    <div className="nav-button-wrapper"><a href="/contact"
                         target="_blank" className="button w-inline-block">
                         <div className="text-icon-box">
                             <div className="text-icon-content">
@@ -57,7 +57,8 @@ export default function Navabr() {
                                 <img loading="lazy"
                                     src="images/6a1c49f097e85d36dc9905ab_Button%20Arrow%20Icon.svg" alt=""
                                     className="button-arrow-icon second" />
-                                <p className="button-text">Contact Us</p>
+                                {/* <p className="button-text">Contact Us</p> */}
+                                <div id="google_translate_element" />
                             </div>
                         </div>
                     </a></div>
