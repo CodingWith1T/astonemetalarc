@@ -176,7 +176,7 @@ export default function Project() {
         <div className="container">
           <div className="inner-page-hero-content-box">
             <div className="inner-page-hero-left">
-              <h1 data-animation="blur-stagger-chars" className="heading-1 white">Projects</h1>
+              <h1 data-animation="blur-stagger-char" className="heading-1 white">Projects</h1>
             </div>
             <div className="inner-page-hero-right fade-in">
               <div className="breadcrumb-box"><a href="/" className="breadcrumb-link">Home</a>
@@ -187,9 +187,9 @@ export default function Project() {
           </div>
         </div>
         <div className="inner-page-hero-box"><img src="/astoneImages/PEB_shade_3.jpeg"
-            loading="lazy" sizes="100vw"
-            srcSet="/astoneImages/PEB_shade_3.jpeg 500w, /astoneImages/PEB_shade_3.jpeg 800w, /astoneImages/PEB_shade_3.jpeg 1080w, /astoneImages/PEB_shade_3.jpeg 1442w"
-            alt="" className="hero-background-image" />
+          loading="lazy" sizes="100vw"
+          srcSet="/astoneImages/PEB_shade_3.jpeg 500w, /astoneImages/PEB_shade_3.jpeg 800w, /astoneImages/PEB_shade_3.jpeg 1080w, /astoneImages/PEB_shade_3.jpeg 1442w"
+          alt="" className="hero-background-image" />
           <div className="inner-page-hero-overlay"></div>
         </div>
       </section>
@@ -229,25 +229,25 @@ export default function Project() {
                 <div role="list" className="all-projects-list w-dyn-items">
                   {filteredProjects.map((project) => (
                     <div key={project.id} role="listitem" className="project-item slide-up w-dyn-item"><a
-                        href={project.href} className="project-link w-inline-block">
-                        <div className="project-image-box"><img src={project.image}
-                            loading="lazy" alt="" sizes="100vw"
-                            srcSet={`${project.image} 500w, ${project.image} 800w, ${project.image} 1080w, ${project.image} 1370w`}
-                            className="project-image" />
-                          <div className="project-overlay"></div>
-                        </div>
-                        <div className="project-content-box">
-                          <p className="project-category">{project.category}</p>
-                          <div className="project-location-name-box">
-                            <div className="project-location-box"><img
-                                src="images/6a1c49f097e85d36dc990696_Orange%20Location%20Icon.svg" loading="lazy" alt=""
-                                className="project-location-icon" />
-                              <p className="project-location">{project.location}</p>
-                            </div>
-                            <h3 className="project-name">{project.name}</h3>
+                      href={project.href} className="project-link w-inline-block">
+                      <div className="project-image-box"><img src={project.image}
+                        loading="lazy" alt="" sizes="100vw"
+                        srcSet={`${project.image} 500w, ${project.image} 800w, ${project.image} 1080w, ${project.image} 1370w`}
+                        className="project-image" />
+                        <div className="project-overlay"></div>
+                      </div>
+                      <div className="project-content-box">
+                        <p className="project-category">{project.category}</p>
+                        <div className="project-location-name-box">
+                          <div className="project-location-box"><img
+                            src="images/6a1c49f097e85d36dc990696_Orange%20Location%20Icon.svg" loading="lazy" alt=""
+                            className="project-location-icon" />
+                            <p className="project-location">{project.location}</p>
                           </div>
+                          <h3 className="project-name">{project.name}</h3>
                         </div>
-                      </a></div>
+                      </div>
+                    </a></div>
                   ))}
                 </div>
               </div>

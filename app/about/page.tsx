@@ -1,14 +1,67 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+
+const faqs = [
+    {
+        question: "What is a Pre Engineered Building (PEB)?",
+        answer: "A Pre Engineered Building is a steel structure system where all components are designed, fabricated, and pre-assembled at the factory, then transported to site for quick erection. PEBs offer 30-40% faster construction than conventional buildings.",
+    },
+    {
+        question: "What services does Astone Metal Arc offer?",
+        answer: "We provide end-to-end PEB solutions including design, fabrication, and erection of industrial sheds, factory buildings, warehouses, mezzanine floors, prefab cold storage, PEB cargo sheds, commercial warehouses, rice mill structures, and aircraft hangars across India.",
+    },
+    {
+        question: "How long does a PEB project typically take?",
+        answer: "PEB construction is significantly faster than conventional methods. A typical industrial shed (50,000 sq ft) can be completed in 8-12 weeks from order to erection, depending on design complexity and site conditions.",
+    },
+    {
+        question: "Do you provide turnkey PEB solutions?",
+        answer: "Yes, we offer complete turnkey PEB solutions — from structural design and engineering to factory fabrication, transportation, on-site erection, and project handover. We manage the entire project lifecycle.",
+    },
+    {
+        question: "What is the warranty on your steel structures?",
+        answer: "Our PEB structures come with a 25+ year structural warranty. We use high-grade steel (IS 2062 / ASTM A572) with galvanized or painted finishes for corrosion protection and long-term durability.",
+    },
+    {
+        question: "Can you build multi-storey steel buildings?",
+        answer: "Yes, we specialize in multi-storey steel buildings including mezzanine floors, multi-level warehouses, and commercial complexes. Our engineering team designs for optimal load-bearing and seismic compliance.",
+    },
+    {
+        question: "Do you provide free project estimates?",
+        answer: "Yes, we offer free project estimates and preliminary design consultations. Share your requirements (location, dimensions, usage, load requirements) and our team will provide a detailed quotation within 48 hours.",
+    },
+    {
+        question: "What locations do you serve in India?",
+        answer: "We have delivered projects across 28+ locations in India including Uttar Pradesh, Delhi NCR, Maharashtra, Gujarat, Rajasthan, Tamil Nadu, Karnataka, and more. We also execute international projects in Africa, Middle East, and Southeast Asia.",
+    },
+    {
+        question: "What are the advantages of PEB over conventional construction?",
+        answer: "PEB offers: 30-40% faster construction, 20-30% cost savings, column-free large spans (up to 100m), lighter foundation requirements, easy future expansion, factory-controlled quality, and lower maintenance costs.",
+    },
+    {
+        question: "Do you manufacture mezzanine floors for existing buildings?",
+        answer: "Yes, we design and install structural steel mezzanine floors for existing warehouses, factories, and commercial spaces to maximize vertical storage capacity without expanding the building footprint.",
+    },
+];
+
 export default function About() {
+    const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+    const toggleFaq = (index: number) => {
+        setOpenIndex((prev) => (prev === index ? null : index));
+    };
     return (
         <>
             <section className="section inner-page-hero">
                 <div className="container">
                     <div className="inner-page-hero-content-box">
                         <div className="inner-page-hero-left">
-                            <h1 data-animation="blur-stagger-chars" className="heading-1 white">ABOUT US</h1>
+                            <h1 data-animation="blur-stagger-char" className="heading-1 white">ABOUT US</h1>
                         </div>
                         <div className="inner-page-hero-right fade-in">
-                            <div className="breadcrumb-box"><a href="/" className="breadcrumb-link">Home</a>
+                            <div className="breadcrumb-box"><Link href="/" className="breadcrumb-link">Home</Link>
                                 <p className="middle-dot">•</p>
                                 <p className="breadcrumb-text">About us</p>
                             </div>
@@ -42,13 +95,13 @@ export default function About() {
                                         src="/astoneImages/oman_project.jpeg" loading="lazy"
                                         sizes="(max-width: 560px) 100vw, 560px"
                                         srcSet="/astoneImages/oman_project.jpeg 500w, /astoneImages/oman_project.jpeg 560w"
-                                        alt="" className="about-project-image" /></div><a data-wf--custom-link--variant="base"
+                                        alt="" className="about-project-image" /></div><Link data-wf--custom-link--variant="base"
                                             data-wf-component-id="8b846f2b-4c03-f3ea-c387-aab4a5c2f35a" data-wf-variant-state="base"
                                             href="/projects" className="custom-link w-inline-block">
                                         <p className="custom-link-text">our projects</p>
                                         <div className="custom-link-line"></div><img loading="lazy"
                                             src="images/6a1c49f097e85d36dc99061d_Top%20Right%20Arrow%202.svg" alt="" />
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className="about-right">
                                     <div className="big-stats-box">
@@ -244,71 +297,38 @@ export default function About() {
                         </div>
                         <div className="faq-right">
                             <div className="faq-list">
-                                <div className="faq-item slide-up">
-                                    <div className="faq-title">
-                                        <p className="faq-title-text">What services do you offer?</p>
-                                        <div className="faq-icon-box"><img loading="lazy" src="images/6a1c49f097e85d36dc99067d_caret.svg" alt=""
-                                            className="faq-icon" /></div>
-                                    </div>
-                                    <div className="faq-content">
-                                        <div className="faq-text-box">
-                                            <p className="faq-content-text">We provide residential and commercial construction, renovations,
-                                                remodeling, project management, and custom building solutions tailored to your needs.</p>
+                                {faqs.map((faq, index) => (
+                                    <div key={index} className="faq-item slide-up">
+                                        <div
+                                            className="faq-title"
+                                            onClick={() => toggleFaq(index)}
+                                            style={{ cursor: "pointer" }}
+                                        >
+                                            <p className="faq-title-text">{faq.question}</p>
+                                            <div className="faq-icon-box">
+                                                <img
+                                                    loading="lazy"
+                                                    src="images/6a1c49f097e85d36dc99067d_caret.svg"
+                                                    alt=""
+                                                    className={`faq-icon ${openIndex === index ? "open" : ""}`}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div
+                                            className="faq-content"
+                                            style={{
+                                                maxHeight: openIndex === index ? "500px" : "0",
+                                                overflow: "hidden",
+                                                transition: "max-height 0.3s ease-out",
+                                                opacity: openIndex === index ? 1 : 0,
+                                            }}
+                                        >
+                                            <div className="faq-text-box">
+                                                <p className="faq-content-text">{faq.answer}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="faq-item slide-up">
-                                    <div className="faq-title">
-                                        <p className="faq-title-text">How long does a project usually take?</p>
-                                        <div className="faq-icon-box"><img loading="lazy" src="images/6a1c49f097e85d36dc99067d_caret.svg" alt=""
-                                            className="faq-icon" /></div>
-                                    </div>
-                                    <div className="faq-content">
-                                        <div className="faq-text-box">
-                                            <p className="faq-content-text">Timelines vary by project size, but most are completed within a few
-                                                weeks to several months after planning and approval.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="faq-item slide-up">
-                                    <div className="faq-title">
-                                        <p className="faq-title-text">How do you ensure quality in your work?</p>
-                                        <div className="faq-icon-box"><img loading="lazy" src="images/6a1c49f097e85d36dc99067d_caret.svg" alt=""
-                                            className="faq-icon" /></div>
-                                    </div>
-                                    <div className="faq-content">
-                                        <div className="faq-text-box">
-                                            <p className="faq-content-text">We use skilled professionals, high-quality materials, and thorough
-                                                inspections to ensure every project meets the highest standards.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="faq-item slide-up">
-                                    <div className="faq-title">
-                                        <p className="faq-title-text">Can I request a custom project plan?</p>
-                                        <div className="faq-icon-box"><img loading="lazy" src="images/6a1c49f097e85d36dc99067d_caret.svg" alt=""
-                                            className="faq-icon" /></div>
-                                    </div>
-                                    <div className="faq-content">
-                                        <div className="faq-text-box">
-                                            <p className="faq-content-text">Yes. We create customized project plans based on your goals, budget, and
-                                                timeline to deliver the best possible results.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="faq-item slide-up">
-                                    <div className="faq-title">
-                                        <p className="faq-title-text">Do you provide free estimates?</p>
-                                        <div className="faq-icon-box"><img loading="lazy" src="images/6a1c49f097e85d36dc99067d_caret.svg" alt=""
-                                            className="faq-icon" /></div>
-                                    </div>
-                                    <div className="faq-content">
-                                        <div className="faq-text-box">
-                                            <p className="faq-content-text">Yes, we offer free project estimates to help you understand costs and
-                                                plan your construction project with confidence.</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                         </div>
                     </div>
