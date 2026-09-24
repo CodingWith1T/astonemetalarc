@@ -68,10 +68,21 @@ export default function About() {
                         </div>
                     </div>
                 </div>
-                <div className="inner-page-hero-box"><img src="/astoneImages/PEB_shade_3.jpeg" loading="lazy"
+                <div className="inner-page-hero-box">
+                    {/* <img src="/astoneImages/PEB_shade_3.jpeg" loading="lazy"
                     sizes="(max-width: 1442px) 100vw, 1442px"
                     srcSet="/astoneImages/PEB_shade_3.jpeg 500w, /astoneImages/PEB_shade_3.jpeg 800w, /astoneImages/PEB_shade_3.jpeg 1080w, /astoneImages/PEB_shade_3.jpeg 1442w"
-                    alt="" className="hero-background-image" />
+                    alt="" className="hero-background-image" /> */}
+                    <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="auto"
+                        style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                    >
+                        <source src="/media/astone_metal_video.mp4" type="video/mp4" />
+                    </video>
                     <div className="inner-page-hero-overlay"></div>
                 </div>
             </section>

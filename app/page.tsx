@@ -134,10 +134,18 @@ export default function Home() {
             </div>
             <div className="about-us-bottom slide-up">
               <div className="about-us-image-box">
-                <img src="/astoneImages/warehouse_1.jpeg"
-                  loading="lazy" sizes="100vw"
-                  srcSet="/astoneImages/warehouse_1.jpeg 500w, /astoneImages/warehouse_1.jpeg 800w, /astoneImages/warehouse_1.jpeg 1228w"
-                  alt="" className="about-us-image" />
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  poster="/astoneImages/warehouse_1.jpeg"
+                  style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                >
+                  <source src="/media/astone_metal_video.mp4" type="video/mp4" />
+                  <img src="/astoneImages/warehouse_1.jpeg" alt="" />
+                </video>
               </div>
               <div className="about-us-stats-box">
                 <div className="about-us-stat-box deep-blue">
@@ -605,6 +613,16 @@ export default function Home() {
           </div>
         </div>
         <div className="why-us-background-box">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+          >
+            <source src="/media/why_choose_ous.mp4" type="video/mp4" />
+          </video>
           <div className="why-us-overlay"></div>
         </div>
       </section>

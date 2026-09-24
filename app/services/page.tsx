@@ -24,6 +24,42 @@ export default function Services() {
                     <div className="inner-page-hero-overlay"></div>
                 </div>
             </section>
+            <section className="section products-section">
+                <div className="container">
+                    <div className="products-box">
+                        {/* <div className="all-projects-top slide-up">
+                            <div className="all-projects-heading-box">
+                                <div className="subtitle-heading-box center">
+                                    <p data-wf--subtitle--variant="base" className="subtitle">Our Products</p>
+                                    <h2 className="heading-2">Structural Steel Solutions for Every Need</h2>
+                                </div>
+                            </div>
+                        </div> */}
+                        <div className="all-services-top slide-up">
+                            <div className="all-services-left">
+                                <p data-wf--subtitle--variant="base" className="subtitle">Our Products</p>
+                            </div>
+                            <div className="all-services-right">
+                                <div className="text-box _600">
+                                    <h2 className="heading-2">Structural Steel Solutions for Every Need</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="products-grid">
+                            <div className="product-item slide-up">Pre Engineered Building</div>
+                            <div className="product-item slide-up">Pre Fabricated Steel Structure</div>
+                            <div className="product-item slide-up">Industrial Shed</div>
+                            <div className="product-item slide-up">Metal Roofing Shed</div>
+                            <div className="product-item slide-up">Mezzanine Floor</div>
+                            <div className="product-item slide-up">Factory Shed</div>
+                            <div className="product-item slide-up">Prefab Cold Storage</div>
+                            <div className="product-item slide-up">PEB Cargo Shed</div>
+                            <div className="product-item slide-up">Rice Mill</div>
+                            <div className="product-item slide-up">Commercial Warehouse</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section className="section">
                 <div className="container">
                     <div className="all-services-box">
@@ -240,6 +276,7 @@ export default function Services() {
                     </div>
                 </div>
             </section>
+
         </>
     )
 }

@@ -7,16 +7,21 @@ export default function Navabr() {
             <div className="container">
                 <div className="navbar-wrapper"><Link href="/" aria-current="page" className="brand w-nav-brand w--current"><img
                     loading="lazy" src="images/logo.JPG" height={60} width={60} alt="" className="logo-image" /></Link>
-                    <nav role="navigation" className="nav-menu w-nav-menu"><Link href="/about" className="nav-link w-inline-block">
-                        <p className="nav-link-text">ABOUT</p>
-                    </Link><Link href="/services" className="nav-link w-inline-block">
+                    <nav role="navigation" className="nav-menu w-nav-menu">
+                        <a href="/" className="nav-link w-inline-block">
+                            <p className="nav-link-text">HOME</p>
+                        </a>
+                        <Link href="/about" className="nav-link w-inline-block">
+                            <p className="nav-link-text">ABOUT</p>
+                        </Link>
+                        <Link href="/services" className="nav-link w-inline-block">
                             <p className="nav-link-text">Services</p>
                         </Link><Link href="/projects" className="nav-link w-inline-block">
                             <p className="nav-link-text">projects</p>
                         </Link><Link href="/contact" className="nav-link w-inline-block">
                             <p className="nav-link-text">Contact</p>
                         </Link>
-                        <div data-delay="0" data-hover="true" className="drop-down w-dropdown">
+                        {/* <div data-delay="0" data-hover="true" className="drop-down w-dropdown">
                             <div className="nav-link pages w-dropdown-toggle">
                                 <div className="nav-link-text pages">pages</div>
                                 <div className="drop-down-arrow w-icon-dropdown-toggle"></div>
@@ -47,7 +52,7 @@ export default function Navabr() {
                                                     className="drop-down-link">All Templates</Link></div>
                                 </div>
                             </nav>
-                        </div>
+                        </div> */}
                     </nav>
                     <div className="nav-button-wrapper"><Link href="/contact"
                         target="_blank" className="button w-inline-block">

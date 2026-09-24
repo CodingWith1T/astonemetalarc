@@ -12,7 +12,7 @@ export default function Footer() {
                         <div className="spacer _24"></div>
                         <div className="text-box _550">
                             <p className="cta-text" style={{ textTransform: "uppercase", marginBottom: "10px", fontWeight: "bold" }}>Drive Your Success</p>
-                            <p className="cta-text">Astone Metal Arc is one of the best Pre Engineered Building Manufacturers in Uttar Pradesh, India, offer Pre Fabricated Steel Structure, Industrial Shed, Metal Roofing Shed, Mezzanine Floor, Factory Shed, Prefab Cold Storage, PEB Cargo Shed, Rice Mill, Commercial Warehouse, etc.
+                            <p className="cta-text">Astone Metal Arc is a leading Pre Engineered Building Manufacturer in Uttar Pradesh, India, specializing in Pre Fabricated Steel Structures, Industrial Sheds, Metal Roofing Sheds, Mezzanine Floors, Factory Sheds, Prefab Cold Storage, PEB Cargo Sheds, Rice Mill Structures, and Commercial Warehouses. With 25+ years of industry expertise, we deliver high-quality steel building solutions across India and internationally.
                             </p>
                         </div>
                         <div className="spacer _40"></div><Link href="/contact" className="button w-inline-block">
@@ -62,14 +62,29 @@ export default function Footer() {
                                 </div>
                             </div>
                             <div className="footer-links-box">
-                                <div className="footer-links-column"><Link href="/about" className="footer-link">About us</Link><Link href="/services"
-                                    className="footer-link">Services</Link><Link href="/projects" className="footer-link">Projects</Link><Link href="/blog"
-                                        className="footer-link">Articles</Link><Link href="/contact" className="footer-link">Contact</Link></div>
-                                <div className="footer-links-column"><Link href="/template/styleguide" className="footer-link">Styleguide</Link><Link
-                                    href="/template/licenses" className="footer-link">Licenses</Link><Link href="/template/instruction"
-                                        className="footer-link">Instruction</Link><Link href="https://modera-template.webflow.io/404" target="_blank"
-                                            className="footer-link">404</Link><Link href="https://webflow.com/" target="_blank"
-                                                className="footer-link">Webflow</Link></div>
+                                <div className="footer-links-column">
+                                    <Link href="/about" className="footer-link footer-link-bold">About us</Link>
+                                    <Link href="/services" className="footer-link">Services</Link>
+                                    <Link href="/projects" className="footer-link">Projects</Link>
+                                    <Link href="/contact" className="footer-link">Contact</Link>
+                                </div>
+                                <div className="footer-links-column">
+                                    <Link href="/services" className="footer-link footer-link-bold">Our Products</Link>
+                                    <Link href="/services" className="footer-link">PEB Cargo Shed</Link>
+                                    <Link href="/services" className="footer-link">Industrial Shed</Link>
+                                    <Link href="/services" className="footer-link">Mezzanine Floor</Link>
+                                    <Link href="/services" className="footer-link">Factory Shed</Link>
+                                    <Link href="/services" className="footer-link">Warehouse</Link>
+                                    <Link href="/services" className="footer-link">Prefab Cold Storage</Link>
+                                </div>
+                                {/* <div className="footer-links-column">
+                                    <Link href="/services" className="footer-link footer-link-bold">Popular Categories</Link>
+                                    <Link href="/services" className="footer-link">Metal Roofing Shed</Link>
+                                    <Link href="/services" className="footer-link">Prefab Cold Storage</Link>
+                                    <Link href="/services" className="footer-link">PEB Cargo Shed</Link>
+                                    <Link href="/services" className="footer-link">Rice Mill</Link>
+                                    <Link href="/services" className="footer-link">Warehouse Construction</Link>
+                                </div> */}
                             </div>
                             <div className="footer-contact-box">
                                 <div className="footer-contact-links-box"><Link href="mailto:sales@astonemetalarc.com"
