@@ -179,20 +179,38 @@ export default function Home() {
               <div className="brands-line"></div>
             </div>
             <div className="brands-marquee-box">
-              <div className="brands-list"><img loading="lazy" src="images/6a1c49f097e85d36dc9905cb_Brand%201.svg" alt=""
-                className="brand-logo" /><img loading="lazy" src="images/6a1c49f097e85d36dc990667_Brand%206.svg" alt=""
-                  className="brand-logo" /><img loading="lazy" src="images/6a1c49f097e85d36dc9905cd_Brand%203.svg" alt=""
-                    className="brand-logo" /><img loading="lazy" src="images/6a1c49f097e85d36dc9905ce_Brand%204.svg" alt=""
-                      className="brand-logo" /><img loading="lazy" src="images/6a1c49f097e85d36dc9905cc_Brand%202.svg" alt=""
-                        className="brand-logo" /><img loading="lazy" src="images/6a1c49f097e85d36dc990663_Brand%205.svg" alt=""
-                          className="brand-logo" /></div>
-              <div className="brands-list"><img loading="lazy" src="images/6a1c49f097e85d36dc9905cb_Brand%201.svg" alt=""
-                className="brand-logo" /><img loading="lazy" src="images/6a1c49f097e85d36dc990667_Brand%206.svg" alt=""
-                  className="brand-logo" /><img loading="lazy" src="images/6a1c49f097e85d36dc9905cd_Brand%203.svg" alt=""
-                    className="brand-logo" /><img loading="lazy" src="images/6a1c49f097e85d36dc9905ce_Brand%204.svg" alt=""
-                      className="brand-logo" /><img loading="lazy" src="images/6a1c49f097e85d36dc9905cc_Brand%202.svg" alt=""
-                        className="brand-logo" /><img loading="lazy" src="images/6a1c49f097e85d36dc990663_Brand%205.svg" alt=""
-                          className="brand-logo" /></div>
+              <div className="brands-list">
+                <img loading="lazy" src="/astoneImages/brands_list/adani_groups.png" alt="Adani Groups" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/asian_paints.png" alt="Asian Paints" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/balrampur_chini_mills_limited.png" alt="Balrampur Chini Mills Limited" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/big_basket.png" alt="Big Basket" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/bsnl.png" alt="BSNL" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/coca_cola.png" alt="Coca Cola" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/goorej.png" alt="Goorej" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/hp_petrolium.png" alt="HP Petroleum" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/indian_railway.png" alt="Indian Railway" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/kingfisher_airlines.png" alt="Kingfisher Airlines" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/reliance_industries_limited.png" alt="Reliance Industries Limited" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/tata.png" alt="Tata" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/trident_group.png" alt="Trident Group" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/blinkit.png" alt="Trident Group" className="brand-logo" />
+              </div>
+              <div className="brands-list">
+                <img loading="lazy" src="/astoneImages/brands_list/adani_groups.png" alt="Adani Groups" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/asian_paints.png" alt="Asian Paints" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/balrampur_chini_mills_limited.png" alt="Balrampur Chini Mills Limited" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/big_basket.png" alt="Big Basket" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/bsnl.png" alt="BSNL" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/coca_cola.png" alt="Coca Cola" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/goorej.png" alt="Goorej" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/hp_petrolium.png" alt="HP Petroleum" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/indian_railway.png" alt="Indian Railway" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/kingfisher_airlines.png" alt="Kingfisher Airlines" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/reliance_industries_limited.png" alt="Reliance Industries Limited" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/tata.png" alt="Tata" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/trident_group.png" alt="Trident Group" className="brand-logo" />
+                <img loading="lazy" src="/astoneImages/brands_list/blinkit.png" alt="Blinkit" className="brand-logo" />
+              </div>
             </div>
           </div>
         </div>

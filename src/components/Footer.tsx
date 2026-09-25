@@ -40,7 +40,7 @@ export default function Footer() {
                         <div className="footer-top">
                             <div className="logo-newsletter-box"><Link href="/" aria-current="page"
                                 className="brand footer w-nav-brand w--current"><img loading="lazy"
-                                    src="images/logo.JPG" width={100} height={100} alt="" className="logo-image" /></Link>
+                                    src="/images/logo.JPG" width={100} height={100} alt="" className="logo-image" /></Link>
                                 <h3 className="brand-name">ASTONE METAL ARC</h3>
                                 <div className="newsletter-form-box">
                                     <p className="newsletter-text">Subscribe to our Newsletter</p>
@@ -67,6 +67,7 @@ export default function Footer() {
                                     <Link href="/services" className="footer-link">Services</Link>
                                     <Link href="/projects" className="footer-link">Projects</Link>
                                     <Link href="/contact" className="footer-link">Contact</Link>
+                                    <Link href="/blog" className="footer-link">Blogs</Link>
                                 </div>
                                 <div className="footer-links-column">
                                     <Link href="/services" className="footer-link footer-link-bold">Our Products</Link>
@@ -95,7 +96,7 @@ export default function Footer() {
                                         707, 7th Floor, Dubai Mall RDC,<br />Ghaziabad - 201002, Uttar Pradesh, India
                                     </p>
                                 </div>
-                                <div className="footer-social-links-box"><Link href="#" target="_blank"
+                                {/* <div className="footer-social-links-box"><Link href="#" target="_blank"
                                     className="footer-social-link w-inline-block">
                                     <div className="social-icon w-embed"><svg width="24" height="24" viewBox="0 0 24 24"
                                         preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +132,7 @@ export default function Footer() {
                                                 d="M15.75 0H18.8171L12.1171 7.67714L20 18.1257H13.8286L8.99143 11.79L3.46286 18.1257H0.392857L7.55857 9.91143L0 0.00142855H6.32857L10.6943 5.79143L15.75 0ZM14.6714 16.2857H16.3714L5.4 1.74429H3.57714L14.6714 16.2857Z"
                                                 fill="currentColor"></path>
                                         </svg></div>
-                                    </Link></div>
+                                    </Link></div> */}
                             </div>
                         </div>
                         <div className="footer-bottom">

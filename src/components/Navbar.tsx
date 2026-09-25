@@ -6,7 +6,7 @@ export default function Navabr() {
             data-easing="ease" data-easing2="ease" role="banner" className="navbar w-nav">
             <div className="container">
                 <div className="navbar-wrapper"><Link href="/" aria-current="page" className="brand w-nav-brand w--current"><img
-                    loading="lazy" src="images/logo.JPG" height={60} width={60} alt="" className="logo-image" /></Link>
+                    loading="lazy" src="/images/logo.JPG" height={60} width={60} alt="" className="logo-image" /></Link>
                     <nav role="navigation" className="nav-menu w-nav-menu">
                         <a href="/" className="nav-link w-inline-block">
                             <p className="nav-link-text">HOME</p>
