@@ -1,0 +1,210 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { Office, formatDate, formatINR, type OfficeVendor } from "../../_lib/office-data";
+import { outstandingOf, useOffice } from "../../_lib/OfficeContext";
+import { useOfficeUI } from "../../_components/OfficeShell";
+import {
+  AmountCell,
+  Card,
+  FiltersBar,
+  PageHead,
+  SortHeader,
+  StatCard,
+  TotalsFooter,
+  useTableControls,
+  type FilterDef,
+} from "../../_components/table-kit";
+import { DetailRow, Drawer, EmptyState, IconBuilding, IconPlus, IconScale, IconStore, StatusBadge } from "../../_components/ui";
+
+const FILTERS: FilterDef[] = [
+  {
+    key: "category",
+    label: "Category",
+    options: ["Rent & Property", "Internet & Telecom", "Stationery & Supplies", "Printing", "Maintenance & HVAC", "IT Hardware & Software", "Professional — Accounting", "Professional — Legal", "Security", "Transport"],
+    allLabel: "All Categories",
+  },
+  { key: "status", label: "Status", options: ["Active", "Inactive"] },
+];
+
+export default function OfficeVendorsClient() {
+  const { vendors } = useOffice();
+  const { open } = useOfficeUI();
+  const [viewing, setViewing] = useState<OfficeVendor | null>(null);
+
+  const controls = useTableControls<Record<string, unknown>>({
+    rows: vendors as unknown as Record<string, unknown>[],
+    pageSize: 10,
+    searchFields: (r) => [String(r.name), String(r.contactPerson), String(r.category), String(r.email), String(r.phone)],
+    filters: FILTERS,
+    defaultSort: { key: "name", dir: "asc" },
+  });
+
+  const rows = useMemo(
+    () =>
+      controls.pageRows.map((r) => {
+        const v = r as unknown as OfficeVendor;
+        const totalPaid = v.transactions.reduce((s, t) => s + t.amount, 0);
+        return { vendor: v, totalPaid, outstanding: outstandingOf(v) };
+      }),
+    [controls.pageRows]
+  );
+
+  const totalPaid = vendors.reduce(
+    (s, v) => s + v.transactions.reduce((a, t) => a + t.amount, 0),
+    0
+  );
+  const totalOutstanding = vendors.reduce((s, v) => s + outstandingOf(v), 0);
+
+  return (
+    <div className="of-page">
+      <PageHead
+        title="Office Vendors"
+        subtitle={`${Office.shortName} · Vendors, suppliers and service providers`}
+        actions={
+          <button className="of-btn of-btn-primary" onClick={() => open("vendor")}>
+            <IconPlus /> Add Vendor
+          </button>
+        }
+      />
+
+      <div className="of-stats of-stats-3">
+        <StatCard label="Total Vendors" value={String(vendors.length)} icon={<IconBuilding size={18} />} sub="Office vendor register" />
+        <StatCard label="Total Paid" value={formatINR(totalPaid)} icon={<IconStore size={18} />} sub="Across all vendors" />
+        <StatCard label="Outstanding" value={formatINR(totalOutstanding)} icon={<IconScale size={18} />} sub="Pending payables" />
+      </div>
+
+      <FiltersBar controls={controls} filters={FILTERS} />
+
+      <div className="of-table-wrap">
+        <div className="of-table-scroll">
+          <table className="of-table">
+            <thead>
+              <tr>
+                <SortHeader label="Vendor" sortKey="name" controls={controls} />
+                <SortHeader label="Category" sortKey="category" controls={controls} />
+                <th>Contact</th>
+                <th className="of-th-right">Total Paid</th>
+                <th className="of-th-right">Outstanding</th>
+                <th>Status</th>
+                <th className="of-th-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.length === 0 && (
+                <tr>
+                  <td colSpan={7}>
+                    <EmptyState
+                      title="No vendors found"
+                      message="No vendors match the current filters."
+                      action={
+                        <button className="of-btn of-btn-primary" onClick={() => open("vendor")}>
+                          <IconPlus /> Add Vendor
+                        </button>
+                      }
+                    />
+                  </td>
+                </tr>
+              )}
+              {rows.map(({ vendor, totalPaid: paid, outstanding }) => (
+                <tr key={vendor.id} className="of-row-click" onClick={() => setViewing(vendor)}>
+                  <td>
+                    <span className="of-cell-title">{vendor.name}</span>
+                    <span className="of-cell-sub">{vendor.gstNumber}</span>
+                  </td>
+                  <td><span className="of-chip">{vendor.category}</span></td>
+                  <td>
+                    <span className="of-cell-title">{vendor.contactPerson}</span>
+                    <span className="of-cell-sub">{vendor.phone}</span>
+                  </td>
+                  <td className="of-td-right"><AmountCell amount={paid} /></td>
+                  <td className="of-td-right">
+                    {outstanding > 0 ? <span className="of-amount out">{formatINR(outstanding)}</span> : <span className="of-muted">—</span>}
+                  </td>
+                  <td><StatusBadge status={vendor.status} /></td>
+                  <td className="of-td-center">
+                    <button
+                      className="of-row-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setViewing(vendor);
+                      }}
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <TotalsFooter label={`${controls.total} vendors`} amount={rows.reduce((s, r) => s + r.totalPaid, 0)} />
+      </div>
+
+      {viewing && (
+        <Drawer
+          open
+          title={viewing.name}
+          subtitle={`${viewing.category} · ${viewing.status}`}
+          onClose={() => setViewing(null)}
+          footer={
+            <div className="of-drawer-actions">
+              <button className="of-btn of-btn-primary" onClick={() => setViewing(null)}>
+                Close
+              </button>
+            </div>
+          }
+        >
+          <div className="of-profile-stats" style={{ borderRadius: 12, borderTop: "1px solid var(--of-border)" }}>
+            <div>
+              <span>Total Paid</span>
+              <strong>{formatINR(viewing.transactions.reduce((s, t) => s + t.amount, 0))}</strong>
+            </div>
+            <div>
+              <span>Outstanding</span>
+              <strong style={{ color: outstandingOf(viewing) ? "#dc2626" : undefined }}>{formatINR(outstandingOf(viewing))}</strong>
+            </div>
+          </div>
+
+          <div className="of-section-title">
+            <h3>Vendor Profile</h3>
+          </div>
+          <div className="of-detail-list">
+            <DetailRow label="Vendor Name" value={viewing.name} />
+            <DetailRow label="Category" value={viewing.category} />
+            <DetailRow label="Contact Person" value={viewing.contactPerson} />
+            <DetailRow label="Phone" value={viewing.phone} />
+            <DetailRow label="Email" value={viewing.email} />
+            <DetailRow label="Address" value={viewing.address} />
+            <DetailRow label="Payment Terms" value={viewing.paymentTerms} />
+            <DetailRow label="GST Number" value={viewing.gstNumber} />
+            <DetailRow label="Status" value={<StatusBadge status={viewing.status} />} />
+          </div>
+
+          <div className="of-section-title">
+            <h3>Transaction History</h3>
+          </div>
+          {viewing.transactions.length === 0 ? (
+            <Card title="No transactions yet" subtitle="Payments to this vendor will appear here">
+              <EmptyState title="No transactions" message="This vendor has no office payment history yet." />
+            </Card>
+          ) : (
+            <div className="of-profile-list of-vendor-tx">
+              {viewing.transactions.map((t) => (
+                <div key={t.reference + t.date} className="of-vendor-tx-row">
+                  <div>
+                    <strong>{t.description}</strong>
+                    <span>
+                      {formatDate(t.date)} · {t.reference} · {t.mode}
+                    </span>
+                  </div>
+                  <span className="of-amount">{formatINR(t.amount)}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </Drawer>
+      )}
+    </div>
+  );
+}

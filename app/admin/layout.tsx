@@ -20,10 +20,20 @@ const sidebarItems = [
       { label: "Reports", path: "/admin/site-finance/reports" },
     ],
   },
-  { label: "Procurement", path: "/admin/procurement" },
-  { label: "Labour", path: "/admin/labour" },
-  { label: "Materials", path: "/admin/materials" },
-  { label: "Office", path: "/admin/office" },
+  // { label: "Procurement", path: "/admin/procurement" },
+  // { label: "Labour", path: "/admin/labour" },
+  // { label: "Materials", path: "/admin/materials" },
+  { label: "Office", path: "/admin/office", subItems: [
+    { label: "Overview", path: "/admin/office" },
+    { label: "Funds", path: "/admin/office/funds" },
+    { label: "Expenses", path: "/admin/office/expenses" },
+    { label: "Petty Cash", path: "/admin/office/petty-cash" },
+    { label: "Requests", path: "/admin/office/requests" },
+    { label: "Approvals", path: "/admin/office/approvals" },
+    { label: "Vendors", path: "/admin/office/vendors" },
+    { label: "Assets", path: "/admin/office/assets" },
+    { label: "Reports", path: "/admin/office/reports" },
+  ] },
   { label: "HR", path: "/admin/hr" },
   { label: "Telecaller", path: "/admin/telecaller" },
 ];
@@ -37,7 +47,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const { logout } = useAuth();
-  const [openFinance, setOpenFinance] = useState(false);
+  const [openGroups, setOpenGroups] = useState<string[]>(["Office"]);
 
   const handleLogout = () => {
     logout();
@@ -50,8 +60,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     return <div className="admin-main">{children}</div>;
   }
 
-  const financeActive = pathname.startsWith("/admin/site-finance");
-  const financeOpen = openFinance || financeActive;
+  const isGroupOpen = (label: string, hasSubItems: boolean) => {
+    if (!hasSubItems) return false;
+    return openGroups.includes(label) || sidebarItems.some(
+      (i) => i.label === label && i.subItems?.some((s) => s.path === pathname)
+    );
+  };
 
   return (
     <div className="admin-layout">
@@ -67,9 +81,11 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
         <ul className="admin-sidebar-nav">
           {sidebarItems.map((item) => {
-            const isActive = pathname === item.path;
+            const isActive = item.subItems
+              ? item.subItems.some((s) => s.path === pathname)
+              : pathname === item.path;
             const hasSubItems = !!item.subItems;
-            const isOpen = item.label === "Site Finance" && financeOpen;
+            const isOpen = isGroupOpen(item.label, hasSubItems);
 
             return (
               <li key={item.label}>
@@ -79,7 +95,11 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                   onClick={(e) => {
                     if (hasSubItems) {
                       e.preventDefault();
-                      setOpenFinance(!openFinance);
+                      setOpenGroups((prev) =>
+                        prev.includes(item.label)
+                          ? prev.filter((l) => l !== item.label)
+                          : [...prev, item.label]
+                      );
                     }
                   }}
                 >
