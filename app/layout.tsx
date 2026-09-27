@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import Navabar from "@/src/components/Navbar";
-import Footer from "@/src/components/Footer";
+import ClientLayout from "@/src/components/ClientLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -213,9 +212,7 @@ export default function RootLayout({
       </head>
       <body>
         <div className="page-wrapper">
-          <Navabar />
-          {children}
-          <Footer />
+          <ClientLayout>{children}</ClientLayout>
         </div>
 
         <script src="/js/jquery-3.5.1.min.dc5e7f18c8.js" type="text/javascript"></script>
