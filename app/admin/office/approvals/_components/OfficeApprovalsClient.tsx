@@ -9,7 +9,7 @@ import {
   PageHead,
   StatCard,
   TotalsFooter,
-} from "../../_components/table-kit";
+} from "@/app/admin/_lib/finance/table-kit";
 import ExpenseDetailDrawer from "../../_components/ExpenseDetailDrawer";
 import {
   ConfirmDialog,
@@ -20,7 +20,7 @@ import {
   IconReceipt,
   IconScale,
   StatusBadge,
-} from "../../_components/ui";
+} from "@/app/admin/_lib/finance/ui";
 
 type QueueItem =
   | { kind: "expense"; data: OfficeExpense }
@@ -106,40 +106,40 @@ export default function OfficeApprovalsClient() {
   ];
 
   return (
-    <div className="of-page">
+    <div className="fin-page">
       <PageHead
         title="Office Approvals"
         subtitle={`${Office.shortName} · Pending decisions on office expenses and requests`}
       />
 
-      <div className="of-stats of-stats-4">
+      <div className="fin-stats fin-stats-4">
         <StatCard label="Pending Expenses" value={String(counts.expense)} icon={<IconReceipt size={18} />} trend="Awaiting approval" trendTone="down" />
         <StatCard label="Purchase Requests" value={String(counts.purchase)} icon={<IconClipboard size={18} />} trend="Awaiting approval" trendTone="down" />
         <StatCard label="Reimbursements" value={String(counts.reimbursement)} icon={<IconScale size={18} />} trend="Awaiting approval" trendTone="down" />
         <StatCard label="Advance Requests" value={String(counts.advance)} icon={<IconClock size={18} />} trend="Awaiting approval" trendTone="down" />
       </div>
 
-      <div className="of-tabs of-tabs-card">
+      <div className="fin-tabs fin-tabs-card">
         {TABS.map((t) => (
-          <button key={t.id} className={`of-tab${tab === t.id ? " active" : ""}`} onClick={() => setTab(t.id)}>
+          <button key={t.id} className={`fin-tab${tab === t.id ? " active" : ""}`} onClick={() => setTab(t.id)}>
             {t.label}
           </button>
         ))}
       </div>
 
-      <div className="of-table-wrap">
-        <div className="of-table-scroll">
-          <table className="of-table">
+      <div className="fin-table-wrap">
+        <div className="fin-table-scroll">
+          <table className="fin-table">
             <thead>
               <tr>
                 <th>Request</th>
                 <th>Description</th>
                 <th>Requested By</th>
                 <th>Department</th>
-                <th className="of-th-right">Amount</th>
+                <th className="fin-th-right">Amount</th>
                 <th>Date</th>
                 <th>Status</th>
-                <th className="of-th-center">Action</th>
+                <th className="fin-th-center">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -157,31 +157,31 @@ export default function OfficeApprovalsClient() {
               {filtered.map((q) => (
                 <tr key={refOf(q)}>
                   <td>
-                    <span className="of-cell-title of-mono">{refOf(q)}</span>
-                    <span className="of-cell-sub">{q.kind === "expense" ? "Office Expense" : `${q.data.requestType} Request`}</span>
+                    <span className="fin-cell-title fin-mono">{refOf(q)}</span>
+                    <span className="fin-cell-sub">{q.kind === "expense" ? "Office Expense" : `${q.data.requestType} Request`}</span>
                   </td>
                   <td>{titleOf(q)}</td>
                   <td>{byOf(q)}</td>
                   <td>{deptOf(q)}</td>
-                  <td className="of-td-right"><AmountCell amount={amountOf(q)} /></td>
-                  <td className="of-strong">{formatDate(q.data.date)}</td>
+                  <td className="fin-td-right"><AmountCell amount={amountOf(q)} /></td>
+                  <td className="fin-strong">{formatDate(q.data.date)}</td>
                   <td><StatusBadge status="Pending Approval" /></td>
-                  <td className="of-td-center">
-                    <div className="of-row-actions">
+                  <td className="fin-td-center">
+                    <div className="fin-row-actions">
                       <button
-                        className="of-row-btn"
+                        className="fin-row-btn"
                         onClick={() => (q.kind === "expense" ? setDrawerExpense(q.data) : null)}
                       >
                         View
                       </button>
                       <button
-                        className="of-row-btn approve"
+                        className="fin-row-btn approve"
                         onClick={() => setDecision({ item: q, action: "approve", reason: "" })}
                       >
                         Approve
                       </button>
                       <button
-                        className="of-row-btn reject"
+                        className="fin-row-btn reject"
                         onClick={() => setDecision({ item: q, action: "reject", reason: REJECT_REASONS[0] })}
                       >
                         Reject
@@ -197,7 +197,7 @@ export default function OfficeApprovalsClient() {
       </div>
 
       <Card title="Approval Rules" subtitle="How decisions affect the office balance">
-        <div className="of-note">
+        <div className="fin-note">
           Approving an expense reduces the office closing balance immediately and marks the entry as settled.
           Rejecting keeps the amount out of the balance and stores the reason against the record for audit.
         </div>

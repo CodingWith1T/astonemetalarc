@@ -10,7 +10,7 @@ import {
 } from "../_lib/office-data";
 import { useOffice } from "../_lib/OfficeContext";
 import { nextReference } from "../_lib/OfficeContext";
-import { Modal, SectionTitle } from "./ui";
+import { Modal, SectionTitle } from "@/app/admin/_lib/finance/ui";
 
 interface FormState {
   date: string;
@@ -84,7 +84,7 @@ export default function AddFundsModal({ open, onClose }: { open: boolean; onClos
       footer={
         <>
           <button
-            className="of-btn of-btn-ghost"
+            className="fin-btn fin-btn-ghost"
             onClick={() => {
               reset();
               onClose();
@@ -92,30 +92,30 @@ export default function AddFundsModal({ open, onClose }: { open: boolean; onClos
           >
             Cancel
           </button>
-          <button className="of-btn of-btn-primary" onClick={handleSubmit}>
+          <button className="fin-btn fin-btn-primary" onClick={handleSubmit}>
             Save Funds
           </button>
         </>
       }
     >
-      <form onSubmit={handleSubmit} className="of-form">
-        <div className="of-form-callout">
+      <form onSubmit={handleSubmit} className="fin-form">
+        <div className="fin-form-callout">
           <strong>Office:</strong> {OFFICE.name} · {OFFICE.line}
-          <span className="of-form-callout-hint">
+          <span className="fin-form-callout-hint">
             Opening balance ₹{OFFICE.openingBalance.toLocaleString("en-IN")} is carried forward separately and is not a fund receipt.
           </span>
         </div>
 
-        <div className="of-form-grid">
-          <div className="of-field">
+        <div className="fin-form-grid">
+          <div className="fin-field">
             <label>Office</label>
-            <input value={OFFICE.name} readOnly className="of-readonly" />
+            <input value={OFFICE.name} readOnly className="fin-readonly" />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Date</label>
             <input type="date" value={form.date} onChange={(e) => set("date", e.target.value)} />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Amount (₹)</label>
             <input
               type="number"
@@ -126,7 +126,7 @@ export default function AddFundsModal({ open, onClose }: { open: boolean; onClos
               onChange={(e) => set("amount", e.target.value)}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Funding Source</label>
             <select value={form.source} onChange={(e) => set("source", e.target.value)}>
               {FUNDING_SOURCES.map((s) => (
@@ -136,7 +136,7 @@ export default function AddFundsModal({ open, onClose }: { open: boolean; onClos
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Payment Method</label>
             <select
               value={form.paymentMethod}
@@ -149,7 +149,7 @@ export default function AddFundsModal({ open, onClose }: { open: boolean; onClos
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Bank / Account</label>
             <select value={form.bank} onChange={(e) => set("bank", e.target.value)}>
               {BANKS.map((b) => (
@@ -159,11 +159,11 @@ export default function AddFundsModal({ open, onClose }: { open: boolean; onClos
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Reference Number</label>
             <input placeholder="OF-004" value={form.reference} onChange={(e) => set("reference", e.target.value)} />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Description</label>
             <input
               placeholder="Monthly Office Funding"
@@ -171,30 +171,30 @@ export default function AddFundsModal({ open, onClose }: { open: boolean; onClos
               onChange={(e) => set("description", e.target.value)}
             />
           </div>
-          <div className="of-field of-field-full">
+          <div className="fin-field fin-field-full">
             <label>Attachment</label>
             <input
               type="file"
               accept=".pdf,.jpg,.png"
               onChange={(e) => set("attachment", e.target.files?.[0]?.name ?? "")}
             />
-            {form.attachment && <small className="of-hint">{form.attachment}</small>}
+            {form.attachment && <small className="fin-hint">{form.attachment}</small>}
           </div>
-          <div className="of-field of-field-full">
+          <div className="fin-field fin-field-full">
             <label>Notes</label>
             <textarea rows={2} value={form.notes} onChange={(e) => set("notes", e.target.value)} />
           </div>
         </div>
 
         <SectionTitle>Preview</SectionTitle>
-        <div className="of-preview-strip">
+        <div className="fin-preview-strip">
           <div>
             <span>New Funds Received</span>
-            <strong className="of-tone-positive">
+            <strong className="fin-tone-positive">
               +₹{(Number(form.amount) || 0).toLocaleString("en-IN")}
             </strong>
           </div>
-          <div className="of-preview-op">→</div>
+          <div className="fin-preview-op">→</div>
           <div>
             <span>Closing Balance after this receipt</span>
             <strong>

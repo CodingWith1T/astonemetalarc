@@ -12,8 +12,8 @@ import {
 } from "../_lib/office-data";
 import { useOffice } from "../_lib/OfficeContext";
 import { useOfficeUI } from "../_components/OfficeShell";
-import { Card, StatCard, PageHead } from "../_components/table-kit";
-import { DepartmentBarChart, DonutChart, FundsFlowChart, MonthlyTrendChart } from "../_components/charts";
+import { Card, StatCard, PageHead } from "@/app/admin/_lib/finance/table-kit";
+import { DepartmentBarChart, DonutChart, FundsFlowChart, MonthlyTrendChart } from "@/app/admin/_lib/finance/charts";
 import ExpenseDetailDrawer from "../_components/ExpenseDetailDrawer";
 import {
   EmptyState,
@@ -29,7 +29,7 @@ import {
   IconScale,
   IconStore,
   IconWallet,
-} from "../_components/ui";
+} from "@/app/admin/_lib/finance/ui";
 
 const QUICK_ACTIONS = [
   { label: "Add Funds", icon: <IconWallet size={17} />, target: "funds" as const, path: "/admin/office/funds" },
@@ -83,16 +83,16 @@ export default function OfficeOverview() {
   }, [expenses]);
 
   return (
-    <div className="of-page">
+    <div className="fin-page">
       <PageHead
         title="Office Management"
         subtitle={`${Office.shortName} · ${Office.line} · ${Office.month}`}
         actions={
           <>
-            <button className="of-btn of-btn-ghost" onClick={() => open("funds")}>
+            <button className="fin-btn fin-btn-ghost" onClick={() => open("funds")}>
               <IconPlus /> Add Funds
             </button>
-            <button className="of-btn of-btn-primary" onClick={() => open("expense")}>
+            <button className="fin-btn fin-btn-primary" onClick={() => open("expense")}>
               <IconPlus /> Add Expense
             </button>
           </>
@@ -100,7 +100,7 @@ export default function OfficeOverview() {
       />
 
       {/* Primary financial cards */}
-      <div className="of-stats of-stats-4">
+      <div className="fin-stats fin-stats-4">
         <StatCard
           label="Total Funds Received"
           value={formatINR(totalFundsReceived)}
@@ -143,64 +143,64 @@ export default function OfficeOverview() {
       <Card
         title={`${Office.shortName} — ${Office.month}`}
         subtitle="Opening balance + new funds received = available funds · available funds − office expenses = closing balance"
-        className="of-card-flow"
+        className="fin-card-flow"
         action={
-          <span className="of-card-chip">Office finance only · site finance excluded</span>
+          <span className="fin-card-chip">Office finance only · site finance excluded</span>
         }
       >
-        <div className="of-flow">
-          <div className="of-flow-step">
-            <span className="of-flow-label">Opening Balance</span>
-            <strong className="of-flow-value">{formatINR(openingBalance)}</strong>
-            <span className="of-flow-note">Carried from August — not a fund receipt</span>
+        <div className="fin-flow">
+          <div className="fin-flow-step">
+            <span className="fin-flow-label">Opening Balance</span>
+            <strong className="fin-flow-value">{formatINR(openingBalance)}</strong>
+            <span className="fin-flow-note">Carried from August — not a fund receipt</span>
           </div>
-          <div className="of-flow-connector">
-            <span className="of-flow-op">+</span>
-            <span className="of-flow-line" />
-            <span className="of-flow-caption">New Funds Received</span>
+          <div className="fin-flow-connector">
+            <span className="fin-flow-op">+</span>
+            <span className="fin-flow-line" />
+            <span className="fin-flow-caption">New Funds Received</span>
           </div>
-          <div className="of-flow-step">
-            <span className="of-flow-label">New Funds Received</span>
-            <strong className="of-flow-value positive">{formatINR(totalFundsReceived, true)}</strong>
-            <span className="of-flow-note">{office.funds.filter((f) => f.source !== "Carried Forward").length} transfers from Head Office</span>
+          <div className="fin-flow-step">
+            <span className="fin-flow-label">New Funds Received</span>
+            <strong className="fin-flow-value positive">{formatINR(totalFundsReceived, true)}</strong>
+            <span className="fin-flow-note">{office.funds.filter((f) => f.source !== "Carried Forward").length} transfers from Head Office</span>
           </div>
-          <div className="of-flow-connector">
-            <span className="of-flow-op">=</span>
-            <span className="of-flow-line" />
-            <span className="of-flow-caption">Available Funds</span>
+          <div className="fin-flow-connector">
+            <span className="fin-flow-op">=</span>
+            <span className="fin-flow-line" />
+            <span className="fin-flow-caption">Available Funds</span>
           </div>
-          <div className="of-flow-step is-total">
-            <span className="of-flow-label">Available Funds</span>
-            <strong className="of-flow-value available">{formatINR(totalAvailableFunds)}</strong>
-            <span className="of-flow-note">
+          <div className="fin-flow-step is-total">
+            <span className="fin-flow-label">Available Funds</span>
+            <strong className="fin-flow-value available">{formatINR(totalAvailableFunds)}</strong>
+            <span className="fin-flow-note">
               {formatINR(openingBalance)} + {formatINR(totalFundsReceived)}
             </span>
           </div>
-          <div className="of-flow-connector">
-            <span className="of-flow-op">−</span>
-            <span className="of-flow-line" />
-            <span className="of-flow-caption">Office Expenses</span>
+          <div className="fin-flow-connector">
+            <span className="fin-flow-op">−</span>
+            <span className="fin-flow-line" />
+            <span className="fin-flow-caption">Office Expenses</span>
           </div>
-          <div className="of-flow-step">
-            <span className="of-flow-label">Office Expenses</span>
-            <strong className="of-flow-value negative">−{formatINR(totalExpenses)}</strong>
-            <span className="of-flow-note">{expenseCount} expense entries</span>
+          <div className="fin-flow-step">
+            <span className="fin-flow-label">Office Expenses</span>
+            <strong className="fin-flow-value negative">−{formatINR(totalExpenses)}</strong>
+            <span className="fin-flow-note">{expenseCount} expense entries</span>
           </div>
-          <div className="of-flow-connector">
-            <span className="of-flow-op">=</span>
-            <span className="of-flow-line" />
-            <span className="of-flow-caption">Closing Balance</span>
+          <div className="fin-flow-connector">
+            <span className="fin-flow-op">=</span>
+            <span className="fin-flow-line" />
+            <span className="fin-flow-caption">Closing Balance</span>
           </div>
-          <div className="of-flow-step is-closing">
-            <span className="of-flow-label">Closing Balance</span>
-            <strong className="of-flow-value closing">{formatINR(closingBalance)}</strong>
-            <span className="of-flow-note">Office funds carried to next period</span>
+          <div className="fin-flow-step is-closing">
+            <span className="fin-flow-label">Closing Balance</span>
+            <strong className="fin-flow-value closing">{formatINR(closingBalance)}</strong>
+            <span className="fin-flow-note">Office funds carried to next period</span>
           </div>
         </div>
       </Card>
 
       {/* Charts */}
-      <div className="of-grid-2">
+      <div className="fin-grid-2">
         <Card title="Financial Overview" subtitle="Funds → Expenses → Balance for the period">
           <FundsFlowChart
             opening={openingBalance}
@@ -215,12 +215,12 @@ export default function OfficeOverview() {
         </Card>
       </div>
 
-      <div className="of-grid-2">
+      <div className="fin-grid-2">
         <Card
           title="Department Expenses"
           subtitle="Click a department to filter the expense list"
           action={
-            <button className="of-link-btn" onClick={() => router.push("/admin/office/departments")}>
+            <button className="fin-link-btn" onClick={() => router.push("/admin/office/departments")}>
               View all
             </button>
           }
@@ -232,12 +232,12 @@ export default function OfficeOverview() {
         </Card>
       </div>
 
-      <div className="of-grid-2 of-grid-2-wide-left">
+      <div className="fin-grid-2 fin-grid-2-wide-left">
         <Card
           title="Recent Transactions"
           subtitle="Latest office financial activity"
           action={
-            <button className="of-link-btn" onClick={() => router.push("/admin/office/balance-ledger")}>
+            <button className="fin-link-btn" onClick={() => router.push("/admin/office/balance-ledger")}>
               Full ledger
             </button>
           }
@@ -245,20 +245,20 @@ export default function OfficeOverview() {
           {recentTransactions.length === 0 ? (
             <EmptyState title="No transactions yet" message="Add funds or an expense to start the office ledger." />
           ) : (
-            <ul className="of-tx-list">
+            <ul className="fin-tx-list">
               {recentTransactions.map((t) => {
                 const expense = expenses.find((e) => e.id === t.sourceId);
                 return (
                   <li key={t.id}>
-                    <button className="of-tx" onClick={() => expense && setDrawerExpense(expense)} disabled={!expense}>
-                      <span className="of-tx-date">{formatDateShort(t.date)}</span>
-                      <span className="of-tx-main">
+                    <button className="fin-tx" onClick={() => expense && setDrawerExpense(expense)} disabled={!expense}>
+                      <span className="fin-tx-date">{formatDateShort(t.date)}</span>
+                      <span className="fin-tx-main">
                         <strong>{t.description}</strong>
                         <span>
                           {t.transaction} · {t.reference}
                         </span>
                       </span>
-                      <span className={`of-tx-amount ${t.moneyIn ? "in" : "out"}`}>
+                      <span className={`fin-tx-amount ${t.moneyIn ? "in" : "out"}`}>
                         {t.moneyIn ? (
                           <>
                             <IconArrowUp size={13} /> {formatINR(t.moneyIn)}
@@ -279,16 +279,16 @@ export default function OfficeOverview() {
           )}
         </Card>
 
-        <div className="of-col-stack">
+        <div className="fin-col-stack">
           <Card title="Quick Actions" subtitle="Common office finance tasks">
-            <div className="of-quick">
+            <div className="fin-quick">
               {QUICK_ACTIONS.map((a) => (
                 <button
                   key={a.label}
-                  className="of-quick-btn"
+                  className="fin-quick-btn"
                   onClick={() => (a.target ? open(a.target) : router.push(a.path))}
                 >
-                  <span className="of-quick-icon">{a.icon}</span>
+                  <span className="fin-quick-icon">{a.icon}</span>
                   {a.label}
                 </button>
               ))}
@@ -296,7 +296,7 @@ export default function OfficeOverview() {
           </Card>
 
           <Card title="Office Snapshot" subtitle="Supplementary office metrics">
-            <div className="of-mini-stats">
+            <div className="fin-mini-stats">
               <div>
                 <span>Petty Cash Balance</span>
                 <strong>{formatINR(pettyCashBalance)}</strong>
@@ -322,7 +322,7 @@ export default function OfficeOverview() {
                 <strong>{expenseCount}</strong>
               </div>
             </div>
-            <div className="of-note">
+            <div className="fin-note">
               <strong>Finance separation:</strong> Office finance (rent, utilities, salaries, vendors, assets, petty
               cash) is tracked here. Construction site finance — labour, materials, petrol, grocery, scaffolding,
               welding, cement, procurement — is tracked separately under Construction.

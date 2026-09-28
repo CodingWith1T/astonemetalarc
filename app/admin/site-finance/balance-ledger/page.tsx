@@ -1,5 +1,5 @@
-import BalanceLedgerClient from "./_components/BalanceLedgerClient";
+import SiteBalanceLedgerClient from "./_components/SiteBalanceLedgerClient";
 
-export default function BalanceLedgerPage() {
-  return <BalanceLedgerClient />;
+export default function SiteBalanceLedgerPage() {
+  return <SiteBalanceLedgerClient />;
 }

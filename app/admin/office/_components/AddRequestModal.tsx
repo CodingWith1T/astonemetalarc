@@ -10,7 +10,7 @@ import {
   type OfficeRequest,
 } from "../_lib/office-data";
 import { useOffice } from "../_lib/OfficeContext";
-import { Modal, SectionTitle } from "./ui";
+import { Modal, SectionTitle } from "@/app/admin/_lib/finance/ui";
 
 export default function AddRequestModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { addRequest, requests, toast } = useOffice();
@@ -80,7 +80,7 @@ export default function AddRequestModal({ open, onClose }: { open: boolean; onCl
       footer={
         <>
           <button
-            className="of-btn of-btn-ghost"
+            className="fin-btn fin-btn-ghost"
             onClick={() => {
               reset();
               onClose();
@@ -88,18 +88,18 @@ export default function AddRequestModal({ open, onClose }: { open: boolean; onCl
           >
             Cancel
           </button>
-          <button className="of-btn of-btn-primary" onClick={handleSubmit}>
+          <button className="fin-btn fin-btn-primary" onClick={handleSubmit}>
             Submit Request
           </button>
         </>
       }
     >
-      <form onSubmit={handleSubmit} className="of-form">
-        <div className="of-form-callout">
+      <form onSubmit={handleSubmit} className="fin-form">
+        <div className="fin-form-callout">
           Reference <strong>{nextId}</strong> · route: Submitted → Pending Approval → Approved
         </div>
-        <div className="of-form-grid">
-          <div className="of-field">
+        <div className="fin-form-grid">
+          <div className="fin-field">
             <label>Requested By</label>
             <select value={form.requestedBy} onChange={(e) => setForm({ ...form, requestedBy: e.target.value })}>
               {STAFF.map((s) => (
@@ -109,7 +109,7 @@ export default function AddRequestModal({ open, onClose }: { open: boolean; onCl
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Department</label>
             <select
               value={form.department}
@@ -122,7 +122,7 @@ export default function AddRequestModal({ open, onClose }: { open: boolean; onCl
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Request Type</label>
             <select
               value={form.requestType}
@@ -137,7 +137,7 @@ export default function AddRequestModal({ open, onClose }: { open: boolean; onCl
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Priority</label>
             <select
               value={form.priority}
@@ -150,7 +150,7 @@ export default function AddRequestModal({ open, onClose }: { open: boolean; onCl
               ))}
             </select>
           </div>
-          <div className="of-field of-field-full">
+          <div className="fin-field fin-field-full">
             <label>Item</label>
             <input
               placeholder="Office Chairs (4 nos)"
@@ -158,7 +158,7 @@ export default function AddRequestModal({ open, onClose }: { open: boolean; onCl
               onChange={(e) => setForm({ ...form, item: e.target.value })}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Quantity</label>
             <input
               type="number"
@@ -167,7 +167,7 @@ export default function AddRequestModal({ open, onClose }: { open: boolean; onCl
               onChange={(e) => setForm({ ...form, quantity: e.target.value })}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Estimated Amount (₹)</label>
             <input
               type="number"
@@ -178,7 +178,7 @@ export default function AddRequestModal({ open, onClose }: { open: boolean; onCl
               onChange={(e) => setForm({ ...form, estimatedAmount: e.target.value })}
             />
           </div>
-          <div className="of-field of-field-full">
+          <div className="fin-field fin-field-full">
             <label>Reason</label>
             <textarea
               rows={2}
@@ -187,19 +187,19 @@ export default function AddRequestModal({ open, onClose }: { open: boolean; onCl
               onChange={(e) => setForm({ ...form, reason: e.target.value })}
             />
           </div>
-          <div className="of-field of-field-full">
+          <div className="fin-field fin-field-full">
             <label>Attachment</label>
             <input
               type="file"
               accept=".pdf,.jpg,.png,.xlsx"
               onChange={(e) => setForm({ ...form, attachment: e.target.files?.[0]?.name ?? "" })}
             />
-            {form.attachment && <small className="of-hint">{form.attachment}</small>}
+            {form.attachment && <small className="fin-hint">{form.attachment}</small>}
           </div>
         </div>
 
         <SectionTitle>Approval Route</SectionTitle>
-        <ol className="of-flow-inline">
+        <ol className="fin-flow-inline">
           <li>Submitted</li>
           <li>Pending Approval</li>
           <li>Approved</li>

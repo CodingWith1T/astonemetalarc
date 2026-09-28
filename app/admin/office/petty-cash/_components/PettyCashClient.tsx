@@ -4,8 +4,8 @@ import { useState } from "react";
 import { Office, formatDateShort, formatINR } from "../../_lib/office-data";
 import { useOffice } from "../../_lib/OfficeContext";
 import { useOfficeUI } from "../../_components/OfficeShell";
-import { Card, FiltersBar, PageHead, SortHeader, StatCard, TotalsFooter, useTableControls, type FilterDef } from "../../_components/table-kit";
-import { EmptyState, IconCash, IconPlus, IconScale, IconWallet } from "../../_components/ui";
+import { Card, FiltersBar, PageHead, SortHeader, StatCard, TotalsFooter, useTableControls, type FilterDef } from "@/app/admin/_lib/finance/table-kit";
+import { EmptyState, IconCash, IconPlus, IconScale, IconWallet } from "@/app/admin/_lib/finance/ui";
 
 const FILTERS: FilterDef[] = [
   { key: "category", label: "Category", options: ["Stationery", "Office Supplies", "Printing", "Local Transportation", "Toll", "Cleaning", "Maintenance", "Other", "Cash Added"], allLabel: "All Categories" },
@@ -26,18 +26,18 @@ export default function PettyCashClient() {
   });
 
   return (
-    <div className="of-page">
+    <div className="fin-page">
       <PageHead
         title="Petty Cash"
         subtitle={`${Office.shortName} · Office → Petty Cash`}
         actions={
-          <button className="of-btn of-btn-primary" onClick={() => open("pettyCash")}>
+          <button className="fin-btn fin-btn-primary" onClick={() => open("pettyCash")}>
             <IconPlus /> Add Cash Transaction
           </button>
         }
       />
 
-      <div className="of-stats of-stats-4">
+      <div className="fin-stats fin-stats-4">
         <StatCard label="Opening Balance" value={formatINR(pettyCashOpening)} icon={<IconWallet size={18} />} sub="Float at start of month" />
         <StatCard label="Cash Added" value={formatINR(pettyCashAdded)} icon={<IconCash size={18} />} trend="Top-ups received" trendTone="up" />
         <StatCard label="Cash Spent" value={formatINR(pettyCashSpent)} icon={<IconScale size={18} />} trend="Vouchers paid" trendTone="down" />
@@ -45,16 +45,16 @@ export default function PettyCashClient() {
       </div>
 
       <Card title="Petty Cash Formula" subtitle="Running balance is calculated after every transaction">
-        <div className="of-formula-bar">
-          <span className="of-formula-part">{formatINR(pettyCashOpening)}</span>
-          <span className="of-formula-op">+</span>
-          <span className="of-formula-part">{formatINR(pettyCashAdded)}</span>
-          <span className="of-formula-op">−</span>
-          <span className="of-formula-part">{formatINR(pettyCashSpent)}</span>
-          <span className="of-formula-op">=</span>
-          <span className="of-formula-part is-result">{formatINR(pettyCashBalance)}</span>
+        <div className="fin-formula-bar">
+          <span className="fin-formula-part">{formatINR(pettyCashOpening)}</span>
+          <span className="fin-formula-op">+</span>
+          <span className="fin-formula-part">{formatINR(pettyCashAdded)}</span>
+          <span className="fin-formula-op">−</span>
+          <span className="fin-formula-part">{formatINR(pettyCashSpent)}</span>
+          <span className="fin-formula-op">=</span>
+          <span className="fin-formula-part is-result">{formatINR(pettyCashBalance)}</span>
         </div>
-        <div className="of-note">
+        <div className="fin-note">
           Petty cash is a separate cash float for the Ghaziabad office. It is <strong>not</strong> merged with the
           office bank balance ledger or with construction site cash.
         </div>
@@ -62,9 +62,9 @@ export default function PettyCashClient() {
 
       <FiltersBar controls={controls} filters={FILTERS} />
 
-      <div className="of-table-wrap">
-        <div className="of-table-scroll">
-          <table className="of-table">
+      <div className="fin-table-wrap">
+        <div className="fin-table-scroll">
+          <table className="fin-table">
             <thead>
               <tr>
                 <SortHeader label="Date" sortKey="date" controls={controls} />
@@ -90,19 +90,19 @@ export default function PettyCashClient() {
                 return (
                   <tr
                     key={p.id}
-                    className={`of-row-click${highlight === p.id ? " active" : ""}`}
+                    className={`fin-row-click${highlight === p.id ? " active" : ""}`}
                     onClick={() => setHighlight(highlight === p.id ? null : p.id)}
                   >
-                    <td className="of-strong">{formatDateShort(p.date)}</td>
+                    <td className="fin-strong">{formatDateShort(p.date)}</td>
                     <td>
-                      <span className="of-cell-title">{p.description}</span>
+                      <span className="fin-cell-title">{p.description}</span>
                     </td>
-                    <td><span className="of-chip">{p.category}</span></td>
-                    <td className="of-td-right">{p.cashIn ? <span className="of-amount in">+{formatINR(p.cashIn)}</span> : <span className="of-muted">—</span>}</td>
-                    <td className="of-td-right">{p.cashOut ? <span className="of-amount out">−{formatINR(p.cashOut)}</span> : <span className="of-muted">—</span>}</td>
-                    <td className="of-td-right"><span className="of-amount balance">{formatINR(p.balance)}</span></td>
+                    <td><span className="fin-chip">{p.category}</span></td>
+                    <td className="fin-td-right">{p.cashIn ? <span className="fin-amount in">+{formatINR(p.cashIn)}</span> : <span className="fin-muted">—</span>}</td>
+                    <td className="fin-td-right">{p.cashOut ? <span className="fin-amount out">−{formatINR(p.cashOut)}</span> : <span className="fin-muted">—</span>}</td>
+                    <td className="fin-td-right"><span className="fin-amount balance">{formatINR(p.balance)}</span></td>
                     <td>{p.addedBy}</td>
-                    <td className="of-mono">{p.reference}</td>
+                    <td className="fin-mono">{p.reference}</td>
                   </tr>
                 );
               })}

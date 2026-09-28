@@ -21,7 +21,7 @@ import {
   IconTrash,
   SectionTitle,
   StatusBadge,
-} from "./ui";
+} from "@/app/admin/_lib/finance/ui";
 
 export default function ExpenseDetailDrawer({
   expense,
@@ -48,37 +48,37 @@ export default function ExpenseDetailDrawer({
         subtitle={`${expense.category} · ${formatDate(expense.date)}`}
         onClose={onClose}
         footer={
-          <div className="of-drawer-actions">
-            <button className="of-btn of-btn-ghost" onClick={() => toast({ tone: "info", title: "Edit mode", message: "Inline editing will be available in the next iteration." })}>
+          <div className="fin-drawer-actions">
+            <button className="fin-btn fin-btn-ghost" onClick={() => toast({ tone: "info", title: "Edit mode", message: "Inline editing will be available in the next iteration." })}>
               <IconEdit size={15} /> Edit
             </button>
-            <button className="of-btn of-btn-ghost" onClick={() => toast({ tone: "info", title: "Receipt preview", message: "Receipt viewer placeholder — backend storage will be added." })}>
+            <button className="fin-btn fin-btn-ghost" onClick={() => toast({ tone: "info", title: "Receipt preview", message: "Receipt viewer placeholder — backend storage will be added." })}>
               <IconFile size={15} /> View Receipt
             </button>
             {expense.status === "Pending Approval" && (
-              <button className="of-btn of-btn-primary" onClick={() => setConfirmApprove(true)}>
+              <button className="fin-btn fin-btn-primary" onClick={() => setConfirmApprove(true)}>
                 <IconShield size={15} /> Approve
               </button>
             )}
-            <button className="of-btn of-btn-danger-ghost" onClick={() => setConfirmDelete(true)}>
+            <button className="fin-btn fin-btn-danger-ghost" onClick={() => setConfirmDelete(true)}>
               <IconTrash size={15} /> Delete
             </button>
           </div>
         }
       >
-        <div className="of-drawer-hero">
+        <div className="fin-drawer-hero">
           <div>
-            <span className="of-drawer-hero-label">Amount</span>
-            <strong className="of-drawer-hero-amount">₹{expense.amount.toLocaleString("en-IN")}</strong>
+            <span className="fin-drawer-hero-label">Amount</span>
+            <strong className="fin-drawer-hero-amount">₹{expense.amount.toLocaleString("en-IN")}</strong>
           </div>
           <StatusBadge status={expense.status} />
         </div>
 
-        <div className="of-tabs">
+        <div className="fin-tabs">
           {(["details", "approval", "audit"] as const).map((t) => (
             <button
               key={t}
-              className={`of-tab${tab === t ? " active" : ""}`}
+              className={`fin-tab${tab === t ? " active" : ""}`}
               onClick={() => setTab(t)}
             >
               {t === "details" ? "Details" : t === "approval" ? "Approval History" : "Audit Log"}
@@ -89,7 +89,7 @@ export default function ExpenseDetailDrawer({
         {tab === "details" && (
           <>
             <SectionTitle>Transaction</SectionTitle>
-            <div className="of-detail-list">
+            <div className="fin-detail-list">
               <DetailRow label="Office" value={`${OFFICE.shortName} — ${OFFICE.line}`} />
               <DetailRow label="Date" value={formatDate(expense.date)} />
               <DetailRow label="Expense ID" value={expense.id} />
@@ -106,7 +106,7 @@ export default function ExpenseDetailDrawer({
                 label="Receipt"
                 value={
                   expense.receipt ? (
-                    <span className="of-file-chip">
+                    <span className="fin-file-chip">
                       <IconFile size={13} /> {expense.receipt}
                     </span>
                   ) : (
@@ -117,7 +117,7 @@ export default function ExpenseDetailDrawer({
               <DetailRow label="Notes" value={expense.notes || "—"} />
             </div>
 
-            <div className="of-note">
+            <div className="fin-note">
               This expense belongs to <strong>Office Finance (Ghaziabad)</strong>. It is never combined with
               construction site finance in a balance calculation.
             </div>
@@ -127,19 +127,19 @@ export default function ExpenseDetailDrawer({
         {tab === "approval" && (
           <>
             <SectionTitle>Approval History</SectionTitle>
-            <div className="of-approval-track">
+            <div className="fin-approval-track">
               {audit.map((step, i) => (
-                <div key={i} className={`of-approval-step of-approval-${step.tone}`}>
-                  <span className="of-approval-dot" />
+                <div key={i} className={`fin-approval-step fin-approval-${step.tone}`}>
+                  <span className="fin-approval-dot" />
                   <div>
                     <strong>{step.action}</strong>
-                    <span className="of-approval-when">{step.dateTime}</span>
-                    <span className="of-approval-by">{step.by}</span>
+                    <span className="fin-approval-when">{step.dateTime}</span>
+                    <span className="fin-approval-by">{step.by}</span>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="of-note">
+            <div className="fin-note">
               Mock audit data for UI demonstration. Full approval history will be persisted per transaction.
             </div>
           </>
@@ -149,19 +149,19 @@ export default function ExpenseDetailDrawer({
           <>
             <SectionTitle
               action={
-                <button className="of-link-btn" onClick={() => toast({ tone: "info", title: "Export log", message: "Audit log export will be available with the backend." })}>
+                <button className="fin-link-btn" onClick={() => toast({ tone: "info", title: "Export log", message: "Audit log export will be available with the backend." })}>
                   <IconHistory size={14} /> Export log
                 </button>
               }
             >
               Audit Log
             </SectionTitle>
-            <div className="of-timeline">
+            <div className="fin-timeline">
               {audit.map((step, i) => (
-                <div key={i} className="of-timeline-item">
-                  <span className={`of-timeline-dot of-timeline-${step.tone}`} />
-                  <div className="of-timeline-body">
-                    <div className="of-timeline-head">
+                <div key={i} className="fin-timeline-item">
+                  <span className={`fin-timeline-dot fin-timeline-${step.tone}`} />
+                  <div className="fin-timeline-body">
+                    <div className="fin-timeline-head">
                       <strong>{step.action}</strong>
                       <span>{step.dateTime}</span>
                     </div>
@@ -171,7 +171,7 @@ export default function ExpenseDetailDrawer({
                 </div>
               ))}
             </div>
-            <button className="of-btn of-btn-ghost of-btn-block" onClick={() => router.push("/admin/office/expenses")}>
+            <button className="fin-btn fin-btn-ghost fin-btn-block" onClick={() => router.push("/admin/office/expenses")}>
               View all office expenses
             </button>
           </>

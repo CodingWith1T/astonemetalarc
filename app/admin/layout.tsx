@@ -14,8 +14,8 @@ const sidebarItems = [
     path: "#",
     subItems: [
       { label: "Overview", path: "/admin/site-finance" },
-      { label: "Site Funds", path: "/admin/site-finance/site-funds" },
-      { label: "Expenses", path: "/admin/site-finance/expenses" },
+      { label: "Remittances", path: "/admin/site-finance/site-funds" },
+      { label: "Site Expenses", path: "/admin/site-finance/expenses" },
       { label: "Balance Ledger", path: "/admin/site-finance/balance-ledger" },
       { label: "Reports", path: "/admin/site-finance/reports" },
     ],

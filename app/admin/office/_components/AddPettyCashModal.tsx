@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { OFFICE, STAFF, type PettyCashEntry } from "../_lib/office-data";
 import { useOffice } from "../_lib/OfficeContext";
-import { Modal, SectionTitle } from "./ui";
+import { Modal, SectionTitle } from "@/app/admin/_lib/finance/ui";
 
 const CATEGORIES = [
   "Stationery",
@@ -84,7 +84,7 @@ export default function AddPettyCashModal({ open, onClose }: { open: boolean; on
       footer={
         <>
           <button
-            className="of-btn of-btn-ghost"
+            className="fin-btn fin-btn-ghost"
             onClick={() => {
               reset();
               onClose();
@@ -92,36 +92,36 @@ export default function AddPettyCashModal({ open, onClose }: { open: boolean; on
           >
             Cancel
           </button>
-          <button className="of-btn of-btn-primary" onClick={handleSubmit}>
+          <button className="fin-btn fin-btn-primary" onClick={handleSubmit}>
             Save Transaction
           </button>
         </>
       }
     >
-      <form onSubmit={handleSubmit} className="of-form">
-        <div className="of-segmented">
+      <form onSubmit={handleSubmit} className="fin-form">
+        <div className="fin-segmented">
           <button
             type="button"
-            className={`of-seg${mode === "out" ? " active" : ""}`}
+            className={`fin-seg${mode === "out" ? " active" : ""}`}
             onClick={() => setMode("out")}
           >
             Cash Out
           </button>
           <button
             type="button"
-            className={`of-seg${mode === "in" ? " active" : ""}`}
+            className={`fin-seg${mode === "in" ? " active" : ""}`}
             onClick={() => setMode("in")}
           >
             Cash In
           </button>
         </div>
 
-        <div className="of-form-grid">
-          <div className="of-field">
+        <div className="fin-form-grid">
+          <div className="fin-field">
             <label>Date</label>
             <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Amount (₹)</label>
             <input
               type="number"
@@ -132,7 +132,7 @@ export default function AddPettyCashModal({ open, onClose }: { open: boolean; on
               onChange={(e) => setForm({ ...form, amount: e.target.value })}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Description</label>
             <input
               placeholder="Postage & Courier"
@@ -140,7 +140,7 @@ export default function AddPettyCashModal({ open, onClose }: { open: boolean; on
               onChange={(e) => setForm({ ...form, description: e.target.value })}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Category</label>
             <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}>
               {CATEGORIES.map((c) => (
@@ -150,7 +150,7 @@ export default function AddPettyCashModal({ open, onClose }: { open: boolean; on
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Added By</label>
             <select value={form.addedBy} onChange={(e) => setForm({ ...form, addedBy: e.target.value })}>
               {STAFF.map((s) => (
@@ -160,7 +160,7 @@ export default function AddPettyCashModal({ open, onClose }: { open: boolean; on
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Voucher Reference</label>
             <input
               placeholder="PV-0154"
@@ -171,21 +171,21 @@ export default function AddPettyCashModal({ open, onClose }: { open: boolean; on
         </div>
 
         <SectionTitle>Running Balance</SectionTitle>
-        <div className="of-preview-strip">
+        <div className="fin-preview-strip">
           <div>
             <span>Current Cash Balance</span>
             <strong>₹{pettyCashBalance.toLocaleString("en-IN")}</strong>
           </div>
-          <div className="of-preview-op">
+          <div className="fin-preview-op">
             {mode === "in" ? "+" : "−"}
           </div>
           <div>
             <span>This Transaction</span>
-            <strong className={mode === "in" ? "of-tone-positive" : "of-tone-negative"}>
+            <strong className={mode === "in" ? "fin-tone-positive" : "fin-tone-negative"}>
               ₹{amount.toLocaleString("en-IN")}
             </strong>
           </div>
-          <div className="of-preview-op">=</div>
+          <div className="fin-preview-op">=</div>
           <div>
             <span>New Cash Balance</span>
             <strong>

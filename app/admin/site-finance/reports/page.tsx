@@ -1,5 +1,5 @@
-import ReportsClient from "./_components/ReportsClient";
+import SiteReportsClient from "./_components/SiteReportsClient";
 
-export default function ReportsPage() {
-  return <ReportsClient />;
+export default function SiteReportsPage() {
+  return <SiteReportsClient />;
 }

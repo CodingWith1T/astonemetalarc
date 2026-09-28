@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { ASSET_STATUSES, OFFICE, STAFF, type OfficeAsset } from "../_lib/office-data";
 import { useOffice } from "../_lib/OfficeContext";
-import { Modal, SectionTitle } from "./ui";
+import { Modal, SectionTitle } from "@/app/admin/_lib/finance/ui";
 
 const ASSET_CATEGORIES = ["IT", "Equipment", "Furniture", "Vehicle", "Appliance", "Security"];
 
@@ -78,7 +78,7 @@ export default function AddAssetModal({ open, onClose }: { open: boolean; onClos
       footer={
         <>
           <button
-            className="of-btn of-btn-ghost"
+            className="fin-btn fin-btn-ghost"
             onClick={() => {
               reset();
               onClose();
@@ -86,18 +86,18 @@ export default function AddAssetModal({ open, onClose }: { open: boolean; onClos
           >
             Cancel
           </button>
-          <button className="of-btn of-btn-primary" onClick={handleSubmit}>
+          <button className="fin-btn fin-btn-primary" onClick={handleSubmit}>
             Save Asset
           </button>
         </>
       }
     >
-      <form onSubmit={handleSubmit} className="of-form">
-        <div className="of-form-callout">
+      <form onSubmit={handleSubmit} className="fin-form">
+        <div className="fin-form-callout">
           Asset ID <strong>{nextAssetId}</strong> · assigned assets are tracked against an employee
         </div>
-        <div className="of-form-grid">
-          <div className="of-field of-field-full">
+        <div className="fin-form-grid">
+          <div className="fin-field fin-field-full">
             <label>Asset Name</label>
             <input
               placeholder="MacBook Pro 14&quot;"
@@ -105,7 +105,7 @@ export default function AddAssetModal({ open, onClose }: { open: boolean; onClos
               onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Category</label>
             <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}>
               {ASSET_CATEGORIES.map((c) => (
@@ -115,7 +115,7 @@ export default function AddAssetModal({ open, onClose }: { open: boolean; onClos
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Purchase Date</label>
             <input
               type="date"
@@ -123,7 +123,7 @@ export default function AddAssetModal({ open, onClose }: { open: boolean; onClos
               onChange={(e) => setForm({ ...form, purchaseDate: e.target.value })}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Purchase Cost (₹)</label>
             <input
               type="number"
@@ -134,27 +134,27 @@ export default function AddAssetModal({ open, onClose }: { open: boolean; onClos
               onChange={(e) => setForm({ ...form, cost: e.target.value })}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Vendor</label>
             <input
-              list="of-asset-vendor-options"
+              list="fin-asset-vendor-options"
               value={form.vendor}
               onChange={(e) => setForm({ ...form, vendor: e.target.value })}
             />
-            <datalist id="of-asset-vendor-options">
+            <datalist id="fin-asset-vendor-options">
               {vendors.map((v) => (
                 <option key={v.id} value={v.name} />
               ))}
             </datalist>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Serial Number</label>
             <input
               value={form.serialNumber}
               onChange={(e) => setForm({ ...form, serialNumber: e.target.value })}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Assigned To</label>
             <select
               value={form.assignedTo}
@@ -168,7 +168,7 @@ export default function AddAssetModal({ open, onClose }: { open: boolean; onClos
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Warranty Expiry</label>
             <input
               type="date"
@@ -176,7 +176,7 @@ export default function AddAssetModal({ open, onClose }: { open: boolean; onClos
               onChange={(e) => setForm({ ...form, warrantyExpiry: e.target.value })}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Status</label>
             <select
               value={form.status}
@@ -189,7 +189,7 @@ export default function AddAssetModal({ open, onClose }: { open: boolean; onClos
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Invoice</label>
             <input
               type="file"
@@ -197,14 +197,14 @@ export default function AddAssetModal({ open, onClose }: { open: boolean; onClos
               onChange={(e) => setForm({ ...form, invoice: e.target.files?.[0]?.name ?? "—" })}
             />
           </div>
-          <div className="of-field of-field-full">
+          <div className="fin-field fin-field-full">
             <label>Notes</label>
             <textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
           </div>
         </div>
 
         <SectionTitle>Asset Register Preview</SectionTitle>
-        <div className="of-preview-strip">
+        <div className="fin-preview-strip">
           <div>
             <span>Asset ID</span>
             <strong>{nextAssetId}</strong>

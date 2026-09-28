@@ -13,7 +13,7 @@ import {
   type PaymentMethod,
 } from "../_lib/office-data";
 import { useOffice } from "../_lib/OfficeContext";
-import { Modal, SectionTitle } from "./ui";
+import { Modal, SectionTitle } from "@/app/admin/_lib/finance/ui";
 
 interface FormState {
   date: string;
@@ -105,7 +105,7 @@ export default function AddExpenseModal({ open, onClose }: { open: boolean; onCl
       footer={
         <>
           <button
-            className="of-btn of-btn-ghost"
+            className="fin-btn fin-btn-ghost"
             onClick={() => {
               reset();
               onClose();
@@ -113,26 +113,26 @@ export default function AddExpenseModal({ open, onClose }: { open: boolean; onCl
           >
             Cancel
           </button>
-          <button className="of-btn of-btn-primary" onClick={handleSubmit}>
+          <button className="fin-btn fin-btn-primary" onClick={handleSubmit}>
             Save Expense
           </button>
         </>
       }
     >
-      <form onSubmit={handleSubmit} className="of-form">
-        <div className="of-form-callout">
+      <form onSubmit={handleSubmit} className="fin-form">
+        <div className="fin-form-callout">
           Reference <strong>{nextId}</strong> · {OFFICE.name}
-          <span className="of-form-callout-hint">
+          <span className="fin-form-callout-hint">
             Expense categories are configurable in the backend. Site / construction costs are recorded under Construction → Sites.
           </span>
         </div>
 
-        <div className="of-form-grid">
-          <div className="of-field">
+        <div className="fin-form-grid">
+          <div className="fin-field">
             <label>Date</label>
             <input type="date" value={form.date} onChange={(e) => set("date", e.target.value)} />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Expense Category</label>
             <select
               value={form.category}
@@ -152,7 +152,7 @@ export default function AddExpenseModal({ open, onClose }: { open: boolean; onCl
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Subcategory</label>
             <select value={form.subcategory} onChange={(e) => set("subcategory", e.target.value)}>
               {subcategories.map((s) => (
@@ -162,7 +162,7 @@ export default function AddExpenseModal({ open, onClose }: { open: boolean; onCl
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Description</label>
             <input
               placeholder="Monthly Internet"
@@ -170,7 +170,7 @@ export default function AddExpenseModal({ open, onClose }: { open: boolean; onCl
               onChange={(e) => set("description", e.target.value)}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Amount (₹)</label>
             <input
               type="number"
@@ -181,7 +181,7 @@ export default function AddExpenseModal({ open, onClose }: { open: boolean; onCl
               onChange={(e) => set("amount", e.target.value)}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Payment Method</label>
             <select
               value={form.paymentMethod}
@@ -194,7 +194,7 @@ export default function AddExpenseModal({ open, onClose }: { open: boolean; onCl
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Paid By</label>
             <select value={form.paidBy} onChange={(e) => set("paidBy", e.target.value)}>
               {STAFF.map((s) => (
@@ -204,7 +204,7 @@ export default function AddExpenseModal({ open, onClose }: { open: boolean; onCl
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Department</label>
             <select value={form.department} onChange={(e) => set("department", e.target.value as Department)}>
               {DEPARTMENTS.map((d) => (
@@ -214,21 +214,21 @@ export default function AddExpenseModal({ open, onClose }: { open: boolean; onCl
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Vendor</label>
             <input
-              list="of-vendor-options"
+              list="fin-vendor-options"
               placeholder="Select or type a vendor"
               value={form.vendor}
               onChange={(e) => set("vendor", e.target.value)}
             />
-            <datalist id="of-vendor-options">
+            <datalist id="fin-vendor-options">
               {vendors.map((v) => (
                 <option key={v.id} value={v.name} />
               ))}
             </datalist>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Status</label>
             <select value={form.status} onChange={(e) => set("status", e.target.value as ExpenseStatus)}>
               {EXPENSE_STATUSES.map((s) => (
@@ -238,33 +238,33 @@ export default function AddExpenseModal({ open, onClose }: { open: boolean; onCl
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Receipt</label>
             <input
               type="file"
               accept=".pdf,.jpg,.png"
               onChange={(e) => set("receipt", e.target.files?.[0]?.name ?? "")}
             />
-            {form.receipt && <small className="of-hint">{form.receipt}</small>}
+            {form.receipt && <small className="fin-hint">{form.receipt}</small>}
           </div>
-          <div className="of-field of-field-full">
+          <div className="fin-field fin-field-full">
             <label>Notes</label>
             <textarea rows={2} value={form.notes} onChange={(e) => set("notes", e.target.value)} />
           </div>
         </div>
 
         <SectionTitle>Balance Impact</SectionTitle>
-        <div className="of-preview-strip">
+        <div className="fin-preview-strip">
           <div>
             <span>This Expense</span>
-            <strong className="of-tone-negative">−₹{(Number(form.amount) || 0).toLocaleString("en-IN")}</strong>
+            <strong className="fin-tone-negative">−₹{(Number(form.amount) || 0).toLocaleString("en-IN")}</strong>
           </div>
-          <div className="of-preview-op">→</div>
+          <div className="fin-preview-op">→</div>
           <div>
             <span>Status</span>
             <strong>{form.status}</strong>
           </div>
-          <div className="of-preview-op">→</div>
+          <div className="fin-preview-op">→</div>
           <div>
             <span>Counted in closing balance</span>
             <strong>{form.status === "Draft" ? "No — on save it still reduces the ledger" : "Yes"}</strong>

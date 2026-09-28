@@ -15,9 +15,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { formatINR } from "../_lib/office-data";
+import { formatMoney } from "./format";
 
 const PALETTE = ["#f97316", "#0e2f3e", "#1d7a8c", "#b45309", "#64748b", "#0f766e", "#a21caf"];
+
+export type ChartCurrency = "INR" | "USD";
 
 const tooltipStyle = {
   backgroundColor: "#0e2f3e",
@@ -30,14 +32,45 @@ const tooltipStyle = {
 
 const axisStyle = { fontSize: 11, fill: "#777778" };
 
-const fmtShort = (v: number) =>
-  Math.abs(v) >= 100000 ? `${(v / 100000).toFixed(2)}L` : Math.abs(v) >= 1000 ? `${(v / 1000).toFixed(1)}K` : String(v);
+/** Compact axis label. The lakh/crore grouping is an INR convention only. */
+const fmtShort = (v: number, currency: ChartCurrency = "INR") =>
+  currency === "USD"
+    ? Math.abs(v) >= 1000000
+      ? `${(v / 1000000).toFixed(2)}M`
+      : Math.abs(v) >= 1000
+        ? `${(v / 1000).toFixed(1)}K`
+        : String(v)
+    : Math.abs(v) >= 10000000
+      ? `${(v / 10000000).toFixed(2)}Cr`
+      : Math.abs(v) >= 100000
+        ? `${(v / 100000).toFixed(2)}L`
+        : Math.abs(v) >= 1000
+          ? `${(v / 1000).toFixed(1)}K`
+          : String(v);
 
 /* Recharts value type is ValueType (number | string | array) */
+function makeTooltip(currency: ChartCurrency) {
+  return function tooltip(value: unknown, name: unknown) {
+    const n = typeof value === "number" ? value : Number(value);
+    const label = typeof name === "string" ? name : String(name ?? "value");
+    return [
+      Number.isFinite(n) ? formatMoney(n, currency) : String(value),
+      label,
+    ] as [string, string];
+  };
+}
+
 function inrTooltip(value: unknown, name: unknown) {
-  const n = typeof value === "number" ? value : Number(value);
-  const label = typeof name === "string" ? name : String(name ?? "value");
-  return [Number.isFinite(n) ? formatINR(n) : String(value), label] as [string, string];
+  return makeTooltip("INR")(value, name);
+}
+
+/**
+ * Resolve a per-slice colour. Callers may supply a `fill` field on each row
+ * to keep a stable colour per cost group; otherwise fall back to the palette.
+ */
+function rowFill(row: Record<string, unknown>, index: number): string {
+  const f = row.fill;
+  return typeof f === "string" && f ? f : PALETTE[index % PALETTE.length];
 }
 
 export function DonutChart({
@@ -45,12 +78,15 @@ export function DonutChart({
   height = 280,
   valueKey = "value",
   nameKey = "name",
+  currency = "INR",
 }: {
   data: Record<string, string | number>[];
   height?: number;
   valueKey?: string;
   nameKey?: string;
+  currency?: ChartCurrency;
 }) {
+  const tip = makeTooltip(currency);
   return (
     <ResponsiveContainer width="100%" height={height}>
       <PieChart>
@@ -63,13 +99,13 @@ export function DonutChart({
           paddingAngle={2}
           stroke="none"
         >
-          {data.map((_, i) => (
-            <Cell key={i} fill={PALETTE[i % PALETTE.length]} />
+          {data.map((row, i) => (
+            <Cell key={i} fill={rowFill(row, i)} />
           ))}
         </Pie>
         <Tooltip
           contentStyle={tooltipStyle}
-          formatter={inrTooltip}
+          formatter={tip}
           itemStyle={{ color: "#fff" }}
           labelStyle={{ color: "#fff" }}
         />
@@ -90,26 +126,29 @@ export function CategoryBarChart({
   height = 300,
   dataKey = "value",
   nameKey = "name",
+  currency = "INR",
 }: {
   data: Record<string, string | number>[];
   height?: number;
   dataKey?: string;
   nameKey?: string;
+  currency?: ChartCurrency;
 }) {
+  const tip = makeTooltip(currency);
   return (
     <ResponsiveContainer width="100%" height={height}>
       <BarChart data={data as unknown as Array<Record<string, number>>} margin={{ top: 8, right: 8, left: -8, bottom: 4 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#ececec" vertical={false} />
         <XAxis dataKey={nameKey} tick={axisStyle} axisLine={false} tickLine={false} interval={0} angle={-20} textAnchor="end" height={54} />
-        <YAxis tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={fmtShort} width={52} />
+        <YAxis tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={(v: number) => fmtShort(v, currency)} width={52} />
         <Tooltip
           contentStyle={tooltipStyle}
           cursor={{ fill: "rgba(15,47,62,0.05)" }}
-          formatter={inrTooltip}
+          formatter={tip}
         />
         <Bar dataKey={dataKey} radius={[5, 5, 0, 0]} maxBarSize={46}>
-          {data.map((_, i) => (
-            <Cell key={i} fill={PALETTE[i % PALETTE.length]} />
+          {data.map((row, i) => (
+            <Cell key={i} fill={rowFill(row, i)} />
           ))}
         </Bar>
       </BarChart>
@@ -123,7 +162,7 @@ export function MonthlyTrendChart({ data, height = 280 }: { data: Record<string,
       <LineChart data={data} margin={{ top: 8, right: 12, left: -8, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#ececec" vertical={false} />
         <XAxis dataKey="month" tick={axisStyle} axisLine={false} tickLine={false} />
-        <YAxis tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={fmtShort} width={52} />
+        <YAxis tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={(v: number) => fmtShort(v)} width={52} />
         <Tooltip contentStyle={tooltipStyle} formatter={inrTooltip} />
         <Legend
           iconType="circle"
@@ -144,12 +183,14 @@ export function FundsFlowChart({
   available,
   expenses,
   closing,
+  currency = "INR",
 }: {
   opening: number;
   funds: number;
   available: number;
   expenses: number;
   closing: number;
+  currency?: ChartCurrency;
 }) {
   const data = [
     { name: "Opening Balance", value: opening, color: "#64748b" },
@@ -159,13 +200,15 @@ export function FundsFlowChart({
     { name: "Closing Balance", value: closing, color: "#b45309" },
   ];
 
+  const tip = makeTooltip(currency);
+
   return (
     <ResponsiveContainer width="100%" height={280}>
       <BarChart data={data} layout="vertical" margin={{ top: 4, right: 24, left: 8, bottom: 4 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#ececec" horizontal={false} />
-        <XAxis type="number" tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={fmtShort} />
+        <XAxis type="number" tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={(v: number) => fmtShort(v, currency)} />
         <YAxis type="category" dataKey="name" tick={{ ...axisStyle, width: 108 }} axisLine={false} tickLine={false} width={112} />
-        <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "rgba(15,47,62,0.05)" }} formatter={inrTooltip} />
+        <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "rgba(15,47,62,0.05)" }} formatter={tip} />
         <Bar dataKey="value" radius={[0, 5, 5, 0]} maxBarSize={24}>
           {data.map((_, i) => (
             <Cell key={i} fill={data[i].color} />
@@ -179,17 +222,20 @@ export function FundsFlowChart({
 export function DepartmentBarChart({
   data,
   height = 300,
+  currency = "INR",
 }: {
   data: Record<string, string | number>[];
   height?: number;
+  currency?: ChartCurrency;
 }) {
+  const tip = makeTooltip(currency);
   return (
     <ResponsiveContainer width="100%" height={height}>
       <BarChart data={data as unknown as Array<Record<string, number>>} layout="vertical" margin={{ top: 4, right: 20, left: 8, bottom: 4 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#ececec" horizontal={false} />
-        <XAxis type="number" tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={fmtShort} />
+        <XAxis type="number" tick={axisStyle} axisLine={false} tickLine={false} tickFormatter={(v: number) => fmtShort(v, currency)} />
         <YAxis type="category" dataKey="name" tick={{ ...axisStyle, width: 100 }} axisLine={false} tickLine={false} width={104} />
-        <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "rgba(15,47,62,0.05)" }} formatter={inrTooltip} />
+        <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "rgba(15,47,62,0.05)" }} formatter={tip} />
         <Bar dataKey="value" fill="#0e2f3e" radius={[0, 5, 5, 0]} maxBarSize={20} />
       </BarChart>
     </ResponsiveContainer>

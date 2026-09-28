@@ -264,8 +264,8 @@ const STATUS_CLASS: Record<string, string> = {
 export function StatusBadge({ status, dot = true }: { status: string; dot?: boolean }) {
   const key = STATUS_CLASS[status.toLowerCase()] ?? "draft";
   return (
-    <span className={`of-badge of-badge-${key}`}>
-      {dot && <span className="of-badge-dot" />}
+    <span className={`fin-badge fin-badge-${key}`}>
+      {dot && <span className="fin-badge-dot" />}
       {status}
     </span>
   );
@@ -306,19 +306,19 @@ export function Modal({
   if (!open) return null;
 
   return (
-    <div className="of-overlay" onMouseDown={onClose} role="dialog" aria-modal="true">
-      <div className="of-modal" style={{ maxWidth: width }} onMouseDown={(e) => e.stopPropagation()}>
-        <header className="of-modal-head">
+    <div className="fin-overlay" onMouseDown={onClose} role="dialog" aria-modal="true">
+      <div className="fin-modal" style={{ maxWidth: width }} onMouseDown={(e) => e.stopPropagation()}>
+        <header className="fin-modal-head">
           <div>
             <h3>{title}</h3>
-            {subtitle && <p className="of-modal-sub">{subtitle}</p>}
+            {subtitle && <p className="fin-modal-sub">{subtitle}</p>}
           </div>
-          <button className="of-icon-btn" onClick={onClose} aria-label="Close">
+          <button className="fin-icon-btn" onClick={onClose} aria-label="Close">
             <IconClose />
           </button>
         </header>
-        <div className="of-modal-body">{children}</div>
-        {footer && <footer className="of-modal-foot">{footer}</footer>}
+        <div className="fin-modal-body">{children}</div>
+        {footer && <footer className="fin-modal-foot">{footer}</footer>}
       </div>
     </div>
   );
@@ -353,19 +353,19 @@ export function Drawer({
   if (!open) return null;
 
   return (
-    <div className="of-drawer-overlay" onMouseDown={onClose} role="dialog" aria-modal="true">
-      <aside className="of-drawer" onMouseDown={(e) => e.stopPropagation()}>
-        <header className="of-drawer-head">
+    <div className="fin-drawer-overlay" onMouseDown={onClose} role="dialog" aria-modal="true">
+      <aside className="fin-drawer" onMouseDown={(e) => e.stopPropagation()}>
+        <header className="fin-drawer-head">
           <div>
             <h3>{title}</h3>
-            {subtitle && <p className="of-drawer-sub">{subtitle}</p>}
+            {subtitle && <p className="fin-drawer-sub">{subtitle}</p>}
           </div>
-          <button className="of-icon-btn" onClick={onClose} aria-label="Close drawer">
+          <button className="fin-icon-btn" onClick={onClose} aria-label="Close drawer">
             <IconClose />
           </button>
         </header>
-        <div className="of-drawer-body">{children}</div>
-        {footer && <footer className="of-drawer-foot">{footer}</footer>}
+        <div className="fin-drawer-body">{children}</div>
+        {footer && <footer className="fin-drawer-foot">{footer}</footer>}
       </aside>
     </div>
   );
@@ -394,17 +394,17 @@ export function ConfirmDialog({
 }) {
   return (
     <Modal open={open} title={title} onClose={onCancel} width={460}>
-      <div className="of-confirm">
-        <div className={`of-confirm-icon of-confirm-icon-${tone}`}>
+      <div className="fin-confirm">
+        <div className={`fin-confirm-icon fin-confirm-icon-${tone}`}>
           {tone === "danger" ? <IconTrash size={22} /> : <IconCheck size={22} />}
         </div>
         <p>{message}</p>
       </div>
-      <div className="of-confirm-actions">
-        <button className="of-btn of-btn-ghost" onClick={onCancel}>
+      <div className="fin-confirm-actions">
+        <button className="fin-btn fin-btn-ghost" onClick={onCancel}>
           {cancelLabel}
         </button>
-        <button className={`of-btn ${tone === "danger" ? "of-btn-danger" : "of-btn-primary"}`} onClick={onConfirm}>
+        <button className={`fin-btn ${tone === "danger" ? "fin-btn-danger" : "fin-btn-primary"}`} onClick={onConfirm}>
           {confirmLabel}
         </button>
       </div>
@@ -426,8 +426,8 @@ export function EmptyState({
   icon?: ReactNode;
 }) {
   return (
-    <div className="of-empty">
-      <div className="of-empty-icon">{icon ?? <IconClipboard size={26} />}</div>
+    <div className="fin-empty">
+      <div className="fin-empty-icon">{icon ?? <IconClipboard size={26} />}</div>
       <h4>{title}</h4>
       <p>{message}</p>
       {action}
@@ -441,10 +441,10 @@ export function SkeletonRows({ rows = 6, cols = 6 }: { rows?: number; cols?: num
   return (
     <tbody>
       {Array.from({ length: rows }).map((_, r) => (
-        <tr key={r} className="of-skeleton-row">
+        <tr key={r} className="fin-skeleton-row">
           {Array.from({ length: cols }).map((__, c) => (
             <td key={c}>
-              <span className="of-skeleton" style={{ width: `${45 + ((r * 7 + c * 13) % 40)}%` }} />
+              <span className="fin-skeleton" style={{ width: `${45 + ((r * 7 + c * 13) % 40)}%` }} />
             </td>
           ))}
         </tr>
@@ -474,24 +474,24 @@ export function Pagination({
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
   return (
-    <div className="of-pagination">
-      <span className="of-pagination-info">
+    <div className="fin-pagination">
+      <span className="fin-pagination-info">
         Showing <strong>{start}</strong>–<strong>{end}</strong> of <strong>{total}</strong>
       </span>
-      <div className="of-pagination-controls">
-        <button className="of-page-btn" disabled={page === 1} onClick={() => onPage(page - 1)}>
+      <div className="fin-pagination-controls">
+        <button className="fin-page-btn" disabled={page === 1} onClick={() => onPage(page - 1)}>
           Previous
         </button>
         {pages.map((p) => (
           <button
             key={p}
-            className={`of-page-btn of-page-num${p === page ? " active" : ""}`}
+            className={`fin-page-btn fin-page-num${p === page ? " active" : ""}`}
             onClick={() => onPage(p)}
           >
             {p}
           </button>
         ))}
-        <button className="of-page-btn" disabled={page === pageCount} onClick={() => onPage(page + 1)}>
+        <button className="fin-page-btn" disabled={page === pageCount} onClick={() => onPage(page + 1)}>
           Next
         </button>
       </div>
@@ -503,16 +503,16 @@ export function Pagination({
 
 export function DetailRow({ label, value, tone }: { label: string; value: ReactNode; tone?: string }) {
   return (
-    <div className="of-detail-row">
-      <span className="of-detail-label">{label}</span>
-      <span className={`of-detail-value${tone ? ` of-tone-${tone}` : ""}`}>{value}</span>
+    <div className="fin-detail-row">
+      <span className="fin-detail-label">{label}</span>
+      <span className={`fin-detail-value${tone ? ` fin-tone-${tone}` : ""}`}>{value}</span>
     </div>
   );
 }
 
 export function SectionTitle({ children, action }: { children: ReactNode; action?: ReactNode }) {
   return (
-    <div className="of-section-title">
+    <div className="fin-section-title">
       <h3>{children}</h3>
       {action}
     </div>

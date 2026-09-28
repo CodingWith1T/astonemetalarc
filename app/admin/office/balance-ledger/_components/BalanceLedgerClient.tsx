@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { downloadCSV } from "../../_lib/csv";
+import { downloadCSV } from "@/app/admin/_lib/finance/csv";
 import { Office, formatDate, formatINR, type OfficeExpense } from "../../_lib/office-data";
 import { useOffice } from "../../_lib/OfficeContext";
-import { Card, FiltersBar, PageHead, SortHeader, StatCard, useTableControls, type FilterDef } from "../../_components/table-kit";
+import { Card, FiltersBar, PageHead, SortHeader, StatCard, useTableControls, type FilterDef } from "@/app/admin/_lib/finance/table-kit";
 import ExpenseDetailDrawer from "../../_components/ExpenseDetailDrawer";
-import { EmptyState, IconArrowDown, IconArrowUp, IconDownload, IconReceipt, IconScale, IconWallet, StatusBadge } from "../../_components/ui";
+import { EmptyState, IconArrowDown, IconArrowUp, IconDownload, IconReceipt, IconScale, IconWallet, StatusBadge } from "@/app/admin/_lib/finance/ui";
 
 const FILTERS: FilterDef[] = [
   { key: "transaction", label: "Transaction", options: ["Opening", "Funding", "Expense"] },
@@ -37,18 +37,18 @@ export default function BalanceLedgerClient() {
   };
 
   return (
-    <div className="of-page">
+    <div className="fin-page">
       <PageHead
         title="Office Balance Ledger"
         subtitle={`${Office.shortName} · Every financial movement with a running balance`}
         actions={
-          <button className="of-btn of-btn-ghost" onClick={handleExport}>
+          <button className="fin-btn fin-btn-ghost" onClick={handleExport}>
             <IconDownload /> Export Ledger
           </button>
         }
       />
 
-      <div className="of-stats of-stats-4">
+      <div className="fin-stats fin-stats-4">
         <StatCard label="Opening Balance" value={formatINR(openingBalance)} icon={<IconScale size={18} />} sub="Carried forward" />
         <StatCard label="Total Money In" value={formatINR(totalFundsReceived)} icon={<IconArrowUp size={18} />} trend="Funds received" trendTone="up" />
         <StatCard label="Total Money Out" value={formatINR(totalExpenses)} icon={<IconArrowDown size={18} />} trend="Office expenses" trendTone="down" />
@@ -58,31 +58,31 @@ export default function BalanceLedgerClient() {
       <Card
         title="Ledger Rule"
         subtitle="The balance column updates after every single transaction"
-        className="of-card-flow"
+        className="fin-card-flow"
       >
-        <div className="of-formula-bar">
-          <span className="of-formula-part">{formatINR(openingBalance)}</span>
-          <span className="of-formula-op">+</span>
-          <span className="of-formula-part">{formatINR(totalFundsReceived)}</span>
-          <span className="of-formula-op">−</span>
-          <span className="of-formula-part">{formatINR(totalExpenses)}</span>
-          <span className="of-formula-op">=</span>
-          <span className="of-formula-part is-result">{formatINR(closingBalance)}</span>
+        <div className="fin-formula-bar">
+          <span className="fin-formula-part">{formatINR(openingBalance)}</span>
+          <span className="fin-formula-op">+</span>
+          <span className="fin-formula-part">{formatINR(totalFundsReceived)}</span>
+          <span className="fin-formula-op">−</span>
+          <span className="fin-formula-part">{formatINR(totalExpenses)}</span>
+          <span className="fin-formula-op">=</span>
+          <span className="fin-formula-part is-result">{formatINR(closingBalance)}</span>
         </div>
       </Card>
 
       <FiltersBar controls={controls} filters={FILTERS} />
 
-      <div className="of-table-wrap">
-        <div className="of-ledger-scroll">
-          <table className="of-table of-ledger-table">
+      <div className="fin-table-wrap">
+        <div className="fin-ledger-scroll">
+          <table className="fin-table fin-ledger-table">
             <thead>
               <tr>
                 <SortHeader label="Date" sortKey="date" controls={controls} />
                 <SortHeader label="Transaction" sortKey="transaction" controls={controls} />
                 <th>Description</th>
-                <th className="of-th-right">Money In</th>
-                <th className="of-th-right">Money Out</th>
+                <th className="fin-th-right">Money In</th>
+                <th className="fin-th-right">Money Out</th>
                 <SortHeader label="Balance" sortKey="balance" controls={controls} align="right" />
                 <th>Reference</th>
               </tr>
@@ -101,25 +101,25 @@ export default function BalanceLedgerClient() {
                 return (
                   <tr
                     key={l.id}
-                    className={`of-row-click${l.transaction === "Opening" ? " is-opening" : ""}${l.transaction === "Funding" ? " is-funding" : ""}`}
+                    className={`fin-row-click${l.transaction === "Opening" ? " is-opening" : ""}${l.transaction === "Funding" ? " is-funding" : ""}`}
                     onClick={() => expense && setDrawer(expense)}
                   >
-                    <td className="of-strong">{formatDate(l.date)}</td>
+                    <td className="fin-strong">{formatDate(l.date)}</td>
                     <td>
-                      <span className={`of-type of-type-${l.transaction.toLowerCase()}`}>{l.transaction}</span>
+                      <span className={`fin-type fin-type-${l.transaction.toLowerCase()}`}>{l.transaction}</span>
                     </td>
                     <td>
-                      <span className="of-cell-title">{l.description}</span>
-                      {expense && <span className="of-cell-sub"><StatusBadge status={expense.status} /></span>}
+                      <span className="fin-cell-title">{l.description}</span>
+                      {expense && <span className="fin-cell-sub"><StatusBadge status={expense.status} /></span>}
                     </td>
-                    <td className="of-td-right">
-                      {l.moneyIn ? <span className="of-amount in">+{formatINR(l.moneyIn)}</span> : <span className="of-muted">₹0</span>}
+                    <td className="fin-td-right">
+                      {l.moneyIn ? <span className="fin-amount in">+{formatINR(l.moneyIn)}</span> : <span className="fin-muted">₹0</span>}
                     </td>
-                    <td className="of-td-right">
-                      {l.moneyOut ? <span className="of-amount out">−{formatINR(l.moneyOut)}</span> : <span className="of-muted">₹0</span>}
+                    <td className="fin-td-right">
+                      {l.moneyOut ? <span className="fin-amount out">−{formatINR(l.moneyOut)}</span> : <span className="fin-muted">₹0</span>}
                     </td>
-                    <td className="of-td-right"><span className="of-amount balance">{formatINR(l.balance)}</span></td>
-                    <td className="of-mono">{l.reference}</td>
+                    <td className="fin-td-right"><span className="fin-amount balance">{formatINR(l.balance)}</span></td>
+                    <td className="fin-mono">{l.reference}</td>
                   </tr>
                 );
               })}
@@ -129,7 +129,7 @@ export default function BalanceLedgerClient() {
       </div>
 
       <Card title="Scope Note" subtitle="What this ledger covers">
-        <div className="of-note">
+        <div className="fin-note">
           This ledger contains <strong>office finance only</strong> — funding received, office expenses, rent,
           utilities, salaries, vendors and petty cash movements. Construction site transactions (labour, materials,
           petrol, grocery, scaffolding, welding, cement, procurement) are recorded under Construction and are never

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { downloadCSV } from "../../_lib/csv";
+import { downloadCSV } from "@/app/admin/_lib/finance/csv";
 import {
   DEPARTMENTS,
   Office,
@@ -20,10 +20,10 @@ import {
   TotalsFooter,
   useTableControls,
   type FilterDef,
-} from "../../_components/table-kit";
+} from "@/app/admin/_lib/finance/table-kit";
 import ExpenseDetailDrawer from "../../_components/ExpenseDetailDrawer";
-import { EmptyState, IconCheck, IconClock, IconDownload, IconPlus, IconReceipt, StatusBadge } from "../../_components/ui";
-import { AmountCell } from "../../_components/table-kit";
+import { EmptyState, IconCheck, IconClock, IconDownload, IconPlus, IconReceipt, StatusBadge } from "@/app/admin/_lib/finance/ui";
+import { AmountCell } from "@/app/admin/_lib/finance/table-kit";
 
 const FILTERS: FilterDef[] = [
   { key: "category", label: "Category", options: ["Office Administration", "Employee", "Transportation", "Technology", "Professional", "Other"], allLabel: "All Categories" },
@@ -70,23 +70,23 @@ export default function OfficeExpensesClient() {
   };
 
   return (
-    <div className="of-page">
+    <div className="fin-page">
       <PageHead
         title="Office Expenses"
         subtitle={`${Office.shortName} · ${Office.line} · ${Office.month}`}
         actions={
           <>
-            <button className="of-btn of-btn-ghost" onClick={handleExport}>
+            <button className="fin-btn fin-btn-ghost" onClick={handleExport}>
               <IconDownload /> Export
             </button>
-            <button className="of-btn of-btn-primary" onClick={() => open("expense")}>
+            <button className="fin-btn fin-btn-primary" onClick={() => open("expense")}>
               <IconPlus /> Add Expense
             </button>
           </>
         }
       />
 
-      <div className="of-stats of-stats-4">
+      <div className="fin-stats fin-stats-4">
         <StatCard label="This Month" value={formatINR(totalExpenses)} icon={<IconReceipt size={18} />} sub={`${expenses.length} expense entries`} />
         <StatCard label="Approved" value={formatINR(approvedExpenses)} icon={<IconCheck size={18} />} trend="Settled against office funds" trendTone="up" />
         <StatCard label="Pending" value={formatINR(pendingExpenses)} icon={<IconClock size={18} />} trend="Awaiting approval" trendTone="down" />
@@ -97,15 +97,15 @@ export default function OfficeExpensesClient() {
         controls={controls}
         filters={FILTERS}
         extra={
-          <span className="of-filter-total">
+          <span className="fin-filter-total">
             Filtered total <strong>{formatINR(controls.sum)}</strong>
           </span>
         }
       />
 
-      <div className="of-table-wrap">
-        <div className="of-table-scroll">
-          <table className="of-table">
+      <div className="fin-table-wrap">
+        <div className="fin-table-scroll">
+          <table className="fin-table">
             <thead>
               <tr>
                 <SortHeader label="Date" sortKey="date" controls={controls} />
@@ -115,7 +115,7 @@ export default function OfficeExpensesClient() {
                 <SortHeader label="Department" sortKey="department" controls={controls} />
                 <SortHeader label="Amount" sortKey="amount" controls={controls} align="right" />
                 <SortHeader label="Status" sortKey="status" controls={controls} />
-                <th className="of-th-center">Actions</th>
+                <th className="fin-th-center">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -126,7 +126,7 @@ export default function OfficeExpensesClient() {
                       title="No expenses match your filters"
                       message="Adjust the filters or add a new office expense entry."
                       action={
-                        <button className="of-btn of-btn-primary" onClick={() => open("expense")}>
+                        <button className="fin-btn fin-btn-primary" onClick={() => open("expense")}>
                           <IconPlus /> Add Expense
                         </button>
                       }
@@ -137,20 +137,20 @@ export default function OfficeExpensesClient() {
               {controls.pageRows.map((r) => {
                 const e = r as unknown as OfficeExpense;
                 return (
-                  <tr key={e.id} className="of-row-click" onClick={() => setDrawer(e)}>
-                    <td className="of-strong">{formatDateShort(e.date)}</td>
-                    <td className="of-mono">{e.id}</td>
-                    <td><span className="of-chip">{e.subcategory}</span></td>
+                  <tr key={e.id} className="fin-row-click" onClick={() => setDrawer(e)}>
+                    <td className="fin-strong">{formatDateShort(e.date)}</td>
+                    <td className="fin-mono">{e.id}</td>
+                    <td><span className="fin-chip">{e.subcategory}</span></td>
                     <td>
-                      <span className="of-cell-title">{e.description}</span>
-                      <span className="of-cell-sub">{e.paymentMethod} · {e.vendor}</span>
+                      <span className="fin-cell-title">{e.description}</span>
+                      <span className="fin-cell-sub">{e.paymentMethod} · {e.vendor}</span>
                     </td>
                     <td>{e.department}</td>
-                    <td className="of-td-right"><AmountCell amount={e.amount} /></td>
+                    <td className="fin-td-right"><AmountCell amount={e.amount} /></td>
                     <td><StatusBadge status={e.status} /></td>
-                    <td className="of-td-center">
+                    <td className="fin-td-center">
                       <button
-                        className="of-row-btn"
+                        className="fin-row-btn"
                         onClick={(ev) => {
                           ev.stopPropagation();
                           setDrawer(e);
@@ -169,7 +169,7 @@ export default function OfficeExpensesClient() {
       </div>
 
       <Card title="Category Reference" subtitle="Office expense categories available in the Add Expense form">
-        <div className="of-cat-grid">
+        <div className="fin-cat-grid">
           {[
             ["Office Administration", "Office Rent · Electricity · Water · Internet · Telephone · Stationery · Printing · Supplies · Cleaning · Security · Maintenance · Furniture · Equipment"],
             ["Employee", "Salary · Salary Advance · Travel · Meals · Welfare · Medical · Training · Recruitment · Reimbursement"],
@@ -178,7 +178,7 @@ export default function OfficeExpensesClient() {
             ["Professional", "Legal Fees · Accounting Fees · Consultancy · Government Fees · Bank Charges"],
             ["Other", "Miscellaneous · Emergency · Other"],
           ].map(([group, items]) => (
-            <div key={group} className="of-cat-card">
+            <div key={group} className="fin-cat-card">
               <strong>{group}</strong>
               <p>{items}</p>
             </div>

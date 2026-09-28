@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { OFFICE, type OfficeVendor } from "../_lib/office-data";
 import { useOffice } from "../_lib/OfficeContext";
-import { Modal } from "./ui";
+import { Modal } from "@/app/admin/_lib/finance/ui";
 
 const VENDOR_CATEGORIES = [
   "Rent & Property",
@@ -80,7 +80,7 @@ export default function AddVendorModal({ open, onClose }: { open: boolean; onClo
       footer={
         <>
           <button
-            className="of-btn of-btn-ghost"
+            className="fin-btn fin-btn-ghost"
             onClick={() => {
               reset();
               onClose();
@@ -88,15 +88,15 @@ export default function AddVendorModal({ open, onClose }: { open: boolean; onClo
           >
             Cancel
           </button>
-          <button className="of-btn of-btn-primary" onClick={handleSubmit}>
+          <button className="fin-btn fin-btn-primary" onClick={handleSubmit}>
             Save Vendor
           </button>
         </>
       }
     >
-      <form onSubmit={handleSubmit} className="of-form">
-        <div className="of-form-grid">
-          <div className="of-field of-field-full">
+      <form onSubmit={handleSubmit} className="fin-form">
+        <div className="fin-form-grid">
+          <div className="fin-field fin-field-full">
             <label>Vendor Name</label>
             <input
               placeholder="ABC Properties"
@@ -104,7 +104,7 @@ export default function AddVendorModal({ open, onClose }: { open: boolean; onClo
               onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Category</label>
             <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}>
               {VENDOR_CATEGORIES.map((c) => (
@@ -114,18 +114,18 @@ export default function AddVendorModal({ open, onClose }: { open: boolean; onClo
               ))}
             </select>
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Contact Person</label>
             <input
               value={form.contactPerson}
               onChange={(e) => setForm({ ...form, contactPerson: e.target.value })}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Phone</label>
             <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Email</label>
             <input
               type="email"
@@ -133,21 +133,21 @@ export default function AddVendorModal({ open, onClose }: { open: boolean; onClo
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>Payment Terms</label>
             <input
               value={form.paymentTerms}
               onChange={(e) => setForm({ ...form, paymentTerms: e.target.value })}
             />
           </div>
-          <div className="of-field">
+          <div className="fin-field">
             <label>GST Number</label>
             <input
               value={form.gstNumber}
               onChange={(e) => setForm({ ...form, gstNumber: e.target.value })}
             />
           </div>
-          <div className="of-field of-field-full">
+          <div className="fin-field fin-field-full">
             <label>Address</label>
             <textarea
               rows={2}

@@ -1,5 +1,5 @@
-import ExpensesClient from "./_components/ExpensesClient";
+import SiteExpensesClient from "./_components/SiteExpensesClient";
 
-export default function ExpensesPage() {
-  return <ExpensesClient />;
+export default function SiteExpensesPage() {
+  return <SiteExpensesClient />;
 }

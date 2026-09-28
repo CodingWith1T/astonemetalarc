@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
-import { OFFICE, formatCompactINR, formatINR } from "../_lib/office-data";
+import { formatCompactINR, formatMoney } from "./format";
 import {
   IconArrowDown,
   IconArrowUp,
@@ -18,24 +18,51 @@ export interface FilterDef {
   allLabel?: string;
 }
 
+/**
+ * Read a keyed property off an arbitrary row without constraining T.
+ *
+ * The table kit needs to read untyped keys (sort keys, filter keys, the
+ * numeric "amount" column) off rows whose real type is a domain interface.
+ * Constraining T to Record<string, unknown> would force every caller to
+ * weaken their types, so we read through a narrow helper instead.
+ */
+function cell(row: unknown, key: string): unknown {
+  return row !== null && typeof row === "object"
+    ? (row as Record<string, unknown>)[key]
+    : undefined;
+}
+
+function numCell(row: unknown, key: string): number {
+  const v = cell(row, key);
+  return typeof v === "number" ? v : 0;
+}
+
 export function useTableControls<T>({
   rows,
   pageSize = 10,
   searchFields,
   filters,
   defaultSort,
+  dateKey = "date",
+  amountKey = "amount",
 }: {
   rows: T[];
   pageSize?: number;
   searchFields: (row: T) => string[];
   filters: FilterDef[];
   defaultSort: { key: string; dir: "asc" | "desc" };
+  /** Row property holding an ISO date (YYYY-MM-DD) used by the date-range filter. */
+  dateKey?: string;
+  /** Row property summed into `sum` and shown in totals footers. */
+  amountKey?: string;
 }) {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [filterValues, setFilterValues] = useState<Record<string, string>>({});
   const [sort, setSort] = useState(defaultSort);
   const [loading, setLoading] = useState(false);
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -47,19 +74,26 @@ export function useTableControls<T>({
       for (const f of filters) {
         const val = filterValues[f.key];
         if (val && val !== "all") {
-          const value = (row as Record<string, unknown>)[f.key];
-          if (String(value) !== val) return false;
+          if (String(cell(row, f.key)) !== val) return false;
+        }
+      }
+      if (dateFrom || dateTo) {
+        const d = String(cell(row, dateKey) ?? "");
+        // Only filter on real ISO dates; rows with other date shapes pass through.
+        if (/^\d{4}-\d{2}-\d{2}$/.test(d)) {
+          if (dateFrom && d < dateFrom) return false;
+          if (dateTo && d > dateTo) return false;
         }
       }
       return true;
     });
-  }, [rows, search, searchFields, filterValues, filters]);
+  }, [rows, search, searchFields, filterValues, filters, dateFrom, dateTo, dateKey]);
 
   const sorted = useMemo(() => {
     const copy = [...filtered];
     copy.sort((a, b) => {
-      const av = (a as Record<string, unknown>)[sort.key];
-      const bv = (b as Record<string, unknown>)[sort.key];
+      const av = cell(a, sort.key);
+      const bv = cell(b, sort.key);
       if (typeof av === "number" && typeof bv === "number") {
         return sort.dir === "asc" ? av - bv : bv - av;
       }
@@ -74,15 +108,13 @@ export function useTableControls<T>({
   const pageRows = sorted.slice((safePage - 1) * pageSize, safePage * pageSize);
 
   const total = sorted.length;
-  const sum = sorted.reduce(
-    (s, r) => s + (typeof (r as Record<string, unknown>).amount === "number" ? ((r as Record<string, unknown>).amount as number) : 0),
-    0
-  );
+  const sum = sorted.reduce((s, r) => s + numCell(r, amountKey), 0);
 
   const toggleSort = (key: string) =>
     setSort((p) => (p.key === key ? { key, dir: p.dir === "asc" ? "desc" : "asc" } : { key, dir: "desc" }));
 
-  const activeFilters = Object.values(filterValues).filter((v) => v && v !== "all").length + (search ? 1 : 0);
+  const activeFilters =
+    Object.values(filterValues).filter((v) => v && v !== "all").length + (search ? 1 : 0) + (dateFrom || dateTo ? 1 : 0);
 
   return {
     pageRows,
@@ -102,43 +134,51 @@ export function useTableControls<T>({
     activeFilters,
     loading,
     setLoading,
+    dateFrom,
+    setDateFrom,
+    dateTo,
+    setDateTo,
     reset: () => {
       setSearch("");
       setFilterValues({});
+      setDateFrom("");
+      setDateTo("");
       setPage(1);
     },
   };
 }
 
-export function FiltersBar({
+export type TableControls<T> = ReturnType<typeof useTableControls<T>>;
+
+export function FiltersBar<T>({
   controls,
   filters,
   extra,
 }: {
-  controls: ReturnType<typeof useTableControls<Record<string, unknown>>>;
+  controls: TableControls<T>;
   filters: FilterDef[];
   extra?: ReactNode;
 }) {
   return (
-    <div className="of-filters">
-      <div className="of-filters-head">
-        <span className="of-filters-title">
+    <div className="fin-filters">
+      <div className="fin-filters-head">
+        <span className="fin-filters-title">
           <IconFilter size={15} /> Filters
-          {controls.activeFilters > 0 && <span className="of-filter-count">{controls.activeFilters}</span>}
+          {controls.activeFilters > 0 && <span className="fin-filter-count">{controls.activeFilters}</span>}
         </span>
-        <div className="of-filters-head-right">
+        <div className="fin-filters-head-right">
           {extra}
           {controls.activeFilters > 0 && (
-            <button className="of-link-btn" onClick={controls.reset}>
+            <button className="fin-link-btn" onClick={controls.reset}>
               Clear all
             </button>
           )}
         </div>
       </div>
-      <div className="of-filters-grid">
-        <div className="of-field">
+      <div className="fin-filters-grid">
+        <div className="fin-field">
           <label>Search</label>
-          <div className="of-search">
+          <div className="fin-search">
             <IconSearch />
             <input
               value={controls.search}
@@ -148,7 +188,7 @@ export function FiltersBar({
           </div>
         </div>
         {filters.map((f) => (
-          <div className="of-field" key={f.key}>
+          <div className="fin-field" key={f.key}>
             <label>{f.label}</label>
             <select value={controls.filterValues[f.key] ?? "all"} onChange={(e) => controls.setFilter(f.key, e.target.value)}>
               <option value="all">{f.allLabel ?? `All ${f.label}`}</option>
@@ -160,12 +200,28 @@ export function FiltersBar({
             </select>
           </div>
         ))}
-        <div className="of-field">
+        <div className="fin-field">
           <label>Date Range</label>
-          <div className="of-daterange">
-            <input type="date" defaultValue={OFFICE.periodFrom} aria-label="From date" />
+          <div className="fin-daterange">
+            <input
+              type="date"
+              value={controls.dateFrom}
+              onChange={(e) => {
+                controls.setDateFrom(e.target.value);
+                controls.setPage(1);
+              }}
+              aria-label="From date"
+            />
             <span>to</span>
-            <input type="date" defaultValue={OFFICE.periodTo} aria-label="To date" />
+            <input
+              type="date"
+              value={controls.dateTo}
+              onChange={(e) => {
+                controls.setDateTo(e.target.value);
+                controls.setPage(1);
+              }}
+              aria-label="To date"
+            />
           </div>
         </div>
       </div>
@@ -187,12 +243,12 @@ export function SortHeader({
   const active = controls.sort.key === sortKey;
   return (
     <th
-      className={`of-sortable${align === "right" ? " of-th-right" : ""}`}
+      className={`fin-sortable${align === "right" ? " fin-th-right" : ""}`}
       onClick={() => controls.toggleSort(sortKey)}
     >
-      <span className="of-th-inner">
+      <span className="fin-th-inner">
         {label}
-        <span className={`of-sort-icon${active ? " active" : ""}`}>
+        <span className={`fin-sort-icon${active ? " active" : ""}`}>
           {active ? (controls.sort.dir === "asc" ? <IconArrowUp size={12} /> : <IconArrowDown size={12} />) : "↕"}
         </span>
       </span>
@@ -200,18 +256,42 @@ export function SortHeader({
   );
 }
 
-export function AmountCell({ amount, signed, tone }: { amount: number; signed?: boolean; tone?: "in" | "out" }) {
-  if (tone === "in") return <span className="of-amount in">{formatINR(amount, true)}</span>;
-  if (tone === "out") return <span className="of-amount out">−{formatINR(amount)}</span>;
-  return <span className="of-amount">{signed ? formatINR(amount, true) : formatINR(amount)}</span>;
+export function AmountCell({
+  amount,
+  signed,
+  tone,
+  currency = "INR",
+}: {
+  amount: number;
+  signed?: boolean;
+  tone?: "in" | "out";
+  currency?: "INR" | "USD";
+}) {
+  if (tone === "in") return <span className="fin-amount in">{formatMoney(amount, currency, true)}</span>;
+  if (tone === "out") return <span className="fin-amount out">−{formatMoney(amount, currency)}</span>;
+  return (
+    <span className="fin-amount">
+      {signed ? formatMoney(amount, currency, true) : formatMoney(amount, currency)}
+    </span>
+  );
 }
 
-export function TotalsFooter({ label, amount, note }: { label: string; amount: number; note?: string }) {
+export function TotalsFooter({
+  label,
+  amount,
+  note,
+  currency = "INR",
+}: {
+  label: string;
+  amount: number;
+  note?: string;
+  currency?: "INR" | "USD";
+}) {
   return (
-    <div className="of-totals">
-      <span className="of-totals-label">{label}</span>
-      <span className="of-totals-amount">{formatINR(amount)}</span>
-      {note && <span className="of-totals-note">{note}</span>}
+    <div className="fin-totals">
+      <span className="fin-totals-label">{label}</span>
+      <span className="fin-totals-amount">{formatMoney(amount, currency)}</span>
+      {note && <span className="fin-totals-note">{note}</span>}
     </div>
   );
 }
@@ -226,19 +306,19 @@ export function PageHead({
   actions?: ReactNode;
 }) {
   return (
-    <div className="of-page-head">
+    <div className="fin-page-head">
       <div>
         <h1>{title}</h1>
         <p>{subtitle}</p>
       </div>
-      <div className="of-page-actions">{actions}</div>
+      <div className="fin-page-actions">{actions}</div>
     </div>
   );
 }
 
 export function AddButton({ label, onClick }: { label: string; onClick: () => void }) {
   return (
-    <button className="of-btn of-btn-primary" onClick={onClick}>
+    <button className="fin-btn fin-btn-primary" onClick={onClick}>
       <IconPlus /> {label}
     </button>
   );
@@ -246,7 +326,7 @@ export function AddButton({ label, onClick }: { label: string; onClick: () => vo
 
 export function ExportButton({ onClick, label = "Export" }: { onClick: () => void; label?: string }) {
   return (
-    <button className="of-btn of-btn-ghost" onClick={onClick}>
+    <button className="fin-btn fin-btn-ghost" onClick={onClick}>
       <IconDownload /> {label}
     </button>
   );
@@ -276,22 +356,22 @@ export function StatCard({
   const Tag = onClick ? "button" : "div";
   return (
     <Tag
-      className={`of-stat${onClick ? " clickable" : ""}${active ? " active" : ""}${compact ? " compact" : ""}`}
+      className={`fin-stat${onClick ? " clickable" : ""}${active ? " active" : ""}${compact ? " compact" : ""}`}
       onClick={onClick}
     >
-      <div className="of-stat-top">
-        <span className="of-stat-label">{label}</span>
-        {icon && <span className="of-stat-icon">{icon}</span>}
+      <div className="fin-stat-top">
+        <span className="fin-stat-label">{label}</span>
+        {icon && <span className="fin-stat-icon">{icon}</span>}
       </div>
-      <div className="of-stat-value">{value}</div>
-      <div className="of-stat-foot">
+      <div className="fin-stat-value">{value}</div>
+      <div className="fin-stat-foot">
         {trend && (
-          <span className={`of-trend of-trend-${trendTone}`}>
+          <span className={`fin-trend fin-trend-${trendTone}`}>
             {trendTone === "up" ? <IconArrowUp size={12} /> : trendTone === "down" ? <IconArrowDown size={12} /> : "•"}
             {trend}
           </span>
         )}
-        {sub && <span className="of-stat-sub">{sub}</span>}
+        {sub && <span className="fin-stat-sub">{sub}</span>}
       </div>
     </Tag>
   );
@@ -311,15 +391,15 @@ export function Card({
   className?: string;
 }) {
   return (
-    <section className={`of-card ${className}`}>
-      <header className="of-card-head">
+    <section className={`fin-card ${className}`}>
+      <header className="fin-card-head">
         <div>
           <h3>{title}</h3>
           {subtitle && <p>{subtitle}</p>}
         </div>
         {action}
       </header>
-      <div className="of-card-body">{children}</div>
+      <div className="fin-card-body">{children}</div>
     </section>
   );
 }

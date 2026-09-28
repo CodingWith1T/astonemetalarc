@@ -14,7 +14,7 @@ import {
   TotalsFooter,
   useTableControls,
   type FilterDef,
-} from "../../_components/table-kit";
+} from "@/app/admin/_lib/finance/table-kit";
 import {
   DetailRow,
   Drawer,
@@ -26,7 +26,7 @@ import {
   IconPlus,
   IconScale,
   StatusBadge,
-} from "../../_components/ui";
+} from "@/app/admin/_lib/finance/ui";
 
 const FILTERS: FilterDef[] = [
   { key: "requestType", label: "Request Type", options: ["Purchase", "Reimbursement", "Advance", "Maintenance", "Travel", "Other"] },
@@ -52,18 +52,18 @@ export default function OfficeRequestsClient() {
   const approved = requests.filter((r) => r.status === "Approved" || r.status === "Purchased" || r.status === "Completed");
 
   return (
-    <div className="of-page">
+    <div className="fin-page">
       <PageHead
         title="Office Requests"
         subtitle={`${Office.shortName} · Purchase · Reimbursement · Advance · Maintenance · Travel`}
         actions={
-          <button className="of-btn of-btn-primary" onClick={() => open("request")}>
+          <button className="fin-btn fin-btn-primary" onClick={() => open("request")}>
             <IconPlus /> New Request
           </button>
         }
       />
 
-      <div className="of-stats of-stats-4">
+      <div className="fin-stats fin-stats-4">
         <StatCard label="Total Requests" value={String(requests.length)} icon={<IconClipboard size={18} />} sub="All request types" />
         <StatCard label="Pending Approval" value={String(pending.length)} icon={<IconClock size={18} />} trend={`${formatINR(pending.reduce((s, r) => s + r.estimatedAmount, 0))} value`} trendTone="down" sub="Needs sign-off" />
         <StatCard label="Approved" value={String(approved.length)} icon={<IconCheck size={18} />} trend="Cleared for action" trendTone="up" />
@@ -72,9 +72,9 @@ export default function OfficeRequestsClient() {
 
       <FiltersBar controls={controls} filters={FILTERS} />
 
-      <div className="of-table-wrap">
-        <div className="of-table-scroll">
-          <table className="of-table">
+      <div className="fin-table-wrap">
+        <div className="fin-table-scroll">
+          <table className="fin-table">
             <thead>
               <tr>
                 <SortHeader label="Request" sortKey="id" controls={controls} />
@@ -85,7 +85,7 @@ export default function OfficeRequestsClient() {
                 <SortHeader label="Amount" sortKey="estimatedAmount" controls={controls} align="right" />
                 <SortHeader label="Priority" sortKey="priority" controls={controls} />
                 <SortHeader label="Status" sortKey="status" controls={controls} />
-                <th className="of-th-center">Actions</th>
+                <th className="fin-th-center">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -96,7 +96,7 @@ export default function OfficeRequestsClient() {
                       title="No requests found"
                       message="No office requests match the current filters."
                       action={
-                        <button className="of-btn of-btn-primary" onClick={() => open("request")}>
+                        <button className="fin-btn fin-btn-primary" onClick={() => open("request")}>
                           <IconPlus /> New Request
                         </button>
                       }
@@ -107,21 +107,21 @@ export default function OfficeRequestsClient() {
               {controls.pageRows.map((r) => {
                 const req = r as unknown as OfficeRequest;
                 return (
-                  <tr key={req.id} className="of-row-click" onClick={() => setViewing(req)}>
-                    <td className="of-mono">{req.id}</td>
-                    <td><span className="of-chip">{req.requestType}</span></td>
+                  <tr key={req.id} className="fin-row-click" onClick={() => setViewing(req)}>
+                    <td className="fin-mono">{req.id}</td>
+                    <td><span className="fin-chip">{req.requestType}</span></td>
                     <td>
-                      <span className="of-cell-title">{req.item}</span>
-                      <span className="of-cell-sub">Qty {req.quantity} · {req.reason}</span>
+                      <span className="fin-cell-title">{req.item}</span>
+                      <span className="fin-cell-sub">Qty {req.quantity} · {req.reason}</span>
                     </td>
                     <td>{req.department}</td>
                     <td>{req.requestedBy}</td>
-                    <td className="of-td-right"><AmountCell amount={req.estimatedAmount} /></td>
+                    <td className="fin-td-right"><AmountCell amount={req.estimatedAmount} /></td>
                     <td><StatusBadge status={req.priority} /></td>
                     <td><StatusBadge status={req.status} /></td>
-                    <td className="of-td-center">
+                    <td className="fin-td-center">
                       <button
-                        className="of-row-btn"
+                        className="fin-row-btn"
                         onClick={(e) => {
                           e.stopPropagation();
                           setViewing(req);
@@ -140,7 +140,7 @@ export default function OfficeRequestsClient() {
       </div>
 
       <Card title="Request Workflow" subtitle="Every office request follows the same approval path">
-        <ol className="of-flow-inline">
+        <ol className="fin-flow-inline">
           <li>Draft</li>
           <li>Submitted</li>
           <li>Pending Approval</li>
@@ -148,7 +148,7 @@ export default function OfficeRequestsClient() {
           <li>Purchased</li>
           <li>Completed</li>
         </ol>
-        <div className="of-note">
+        <div className="fin-note">
           Rejected requests keep their full history so the decision can be audited later. Approved requests can be
           converted into an office expense from the detail drawer.
         </div>
@@ -161,11 +161,11 @@ export default function OfficeRequestsClient() {
           subtitle={`${viewing.requestType} · ${viewing.department}`}
           onClose={() => setViewing(null)}
           footer={
-            <div className="of-drawer-actions">
+            <div className="fin-drawer-actions">
               {viewing.status === "Pending Approval" && (
                 <>
                   <button
-                    className="of-btn of-btn-danger-ghost"
+                    className="fin-btn fin-btn-danger-ghost"
                     onClick={() =>
                       setConfirm({
                         title: "Reject request?",
@@ -179,7 +179,7 @@ export default function OfficeRequestsClient() {
                     Reject
                   </button>
                   <button
-                    className="of-btn of-btn-primary"
+                    className="fin-btn fin-btn-primary"
                     onClick={() =>
                       setConfirm({
                         title: "Approve request?",
@@ -194,21 +194,21 @@ export default function OfficeRequestsClient() {
                   </button>
                 </>
               )}
-              <button className="of-btn of-btn-ghost" onClick={() => setViewing(null)}>
+              <button className="fin-btn fin-btn-ghost" onClick={() => setViewing(null)}>
                 Close
               </button>
             </div>
           }
         >
-          <div className="of-drawer-hero">
+          <div className="fin-drawer-hero">
             <div>
-              <span className="of-drawer-hero-label">Estimated Amount</span>
-              <strong className="of-drawer-hero-amount">{formatINR(viewing.estimatedAmount)}</strong>
+              <span className="fin-drawer-hero-label">Estimated Amount</span>
+              <strong className="fin-drawer-hero-amount">{formatINR(viewing.estimatedAmount)}</strong>
             </div>
             <StatusBadge status={viewing.status} />
           </div>
 
-          <div className="of-detail-list">
+          <div className="fin-detail-list">
             <DetailRow label="Requested By" value={viewing.requestedBy} />
             <DetailRow label="Department" value={viewing.department} />
             <DetailRow label="Request Type" value={viewing.requestType} />
@@ -222,7 +222,7 @@ export default function OfficeRequestsClient() {
               label="Attachment"
               value={
                 viewing.attachment ? (
-                  <span className="of-file-chip">
+                  <span className="fin-file-chip">
                     <IconFile size={13} /> {viewing.attachment}
                   </span>
                 ) : (
@@ -232,24 +232,24 @@ export default function OfficeRequestsClient() {
             />
           </div>
 
-          <div className="of-section-title">
+          <div className="fin-section-title">
             <h3>Approval History</h3>
           </div>
-          <div className="of-timeline">
-            <div className="of-timeline-item">
-              <span className="of-timeline-dot of-timeline-created" />
-              <div className="of-timeline-body">
-                <div className="of-timeline-head">
+          <div className="fin-timeline">
+            <div className="fin-timeline-item">
+              <span className="fin-timeline-dot fin-timeline-created" />
+              <div className="fin-timeline-body">
+                <div className="fin-timeline-head">
                   <strong>Created</strong>
                   <span>{formatDate(viewing.date)} · 10:15 AM</span>
                 </div>
                 <p>Request raised by {viewing.requestedBy}</p>
               </div>
             </div>
-            <div className="of-timeline-item">
-              <span className="of-timeline-dot of-timeline-moved" />
-              <div className="of-timeline-body">
-                <div className="of-timeline-head">
+            <div className="fin-timeline-item">
+              <span className="fin-timeline-dot fin-timeline-moved" />
+              <div className="fin-timeline-body">
+                <div className="fin-timeline-head">
                   <strong>Submitted</strong>
                   <span>{formatDate(viewing.date)} · 10:25 AM</span>
                 </div>
@@ -257,10 +257,10 @@ export default function OfficeRequestsClient() {
               </div>
             </div>
             {viewing.status !== "Draft" && viewing.status !== "Submitted" && (
-              <div className="of-timeline-item">
-                <span className={`of-timeline-dot of-timeline-${viewing.status === "Rejected" ? "rejected" : "approved"}`} />
-                <div className="of-timeline-body">
-                  <div className="of-timeline-head">
+              <div className="fin-timeline-item">
+                <span className={`fin-timeline-dot fin-timeline-${viewing.status === "Rejected" ? "rejected" : "approved"}`} />
+                <div className="fin-timeline-body">
+                  <div className="fin-timeline-head">
                     <strong>{viewing.status}</strong>
                     <span>{formatDate(viewing.date)} · 12:40 PM</span>
                   </div>
@@ -270,7 +270,7 @@ export default function OfficeRequestsClient() {
             )}
           </div>
 
-          <div className="of-note">
+          <div className="fin-note">
             Requests are office-level only. Site procurement requests stay under Construction → Sites and never
             affect the Ghaziabad office balance.
           </div>

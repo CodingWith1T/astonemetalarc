@@ -1,62 +1,54 @@
 "use client";
 
 import { createContext, useContext, useState, type ReactNode } from "react";
-import { useOffice } from "../_lib/OfficeContext";
-import AddAssetModal from "./AddAssetModal";
+import { useSiteFinance } from "../_lib/SiteFinanceContext";
 import AddExpenseModal from "./AddExpenseModal";
-import AddFundsModal from "./AddFundsModal";
-import AddPettyCashModal from "./AddPettyCashModal";
-import AddRequestModal from "./AddRequestModal";
-import AddVendorModal from "./AddVendorModal";
+import AddRemittanceModal from "./AddRemittanceModal";
+import ExpenseDrawer from "./ExpenseDrawer";
 import { ConfirmDialog, IconCheck, IconClose, IconWallet } from "@/app/admin/_lib/finance/ui";
 
-type ModalKey =
-  | "funds"
-  | "expense"
-  | "pettyCash"
-  | "request"
-  | "vendor"
-  | "asset"
-  | null;
+type ModalKey = "remittance" | "expense" | null;
 
-interface OfficeUIValue {
+interface SiteFinanceUIValue {
   open: (m: Exclude<ModalKey, null>) => void;
   close: () => void;
+  /** Open the read-only detail drawer for one expense row. */
+  openExpense: (id: string) => void;
 }
 
-const OfficeUIContext = createContext<OfficeUIValue | null>(null);
+const SiteFinanceUIContext = createContext<SiteFinanceUIValue | null>(null);
 
-export function useOfficeUI() {
-  const ctx = useContext(OfficeUIContext);
-  if (!ctx) throw new Error("useOfficeUI must be used inside OfficeShell");
+export function useSiteFinanceUI() {
+  const ctx = useContext(SiteFinanceUIContext);
+  if (!ctx) throw new Error("useSiteFinanceUI must be used inside SiteFinanceShell");
   return ctx;
 }
 
-export function OfficeShell({ children }: { children: ReactNode }) {
-  const { toasts, dismissToast, confirm, setConfirm } = useOffice();
+export function SiteFinanceShell({ children }: { children: ReactNode }) {
+  const { toasts, dismissToast, confirm, setConfirm } = useSiteFinance();
   const [modal, setModal] = useState<ModalKey>(null);
+  const [drawerExpenseId, setDrawerExpenseId] = useState<string | null>(null);
 
   const close = () => setModal(null);
 
   return (
-    <OfficeUIContext.Provider value={{ open: setModal, close }}>
+    <SiteFinanceUIContext.Provider
+      value={{ open: setModal, close, openExpense: setDrawerExpenseId }}
+    >
       {children}
 
-      <AddFundsModal open={modal === "funds"} onClose={close} />
+      <AddRemittanceModal open={modal === "remittance"} onClose={close} />
       <AddExpenseModal open={modal === "expense"} onClose={close} />
-      <AddPettyCashModal open={modal === "pettyCash"} onClose={close} />
-      <AddRequestModal open={modal === "request"} onClose={close} />
-      <AddVendorModal open={modal === "vendor"} onClose={close} />
-      <AddAssetModal open={modal === "asset"} onClose={close} />
+      <ExpenseDrawer expenseId={drawerExpenseId} onClose={() => setDrawerExpenseId(null)} />
 
       {confirm && (
         <ConfirmDialog
           open
           title={confirm.title}
           message={confirm.message}
-          confirmLabel={confirm.confirmLabel}
+          confirmLabel={confirm.confirmLabel ?? "Confirm"}
           cancelLabel={confirm.cancelLabel ?? "Cancel"}
-          tone={confirm.tone}
+          tone={confirm.tone ?? "primary"}
           onCancel={() => setConfirm(null)}
           onConfirm={() => {
             confirm.onConfirm();
@@ -81,6 +73,6 @@ export function OfficeShell({ children }: { children: ReactNode }) {
           </div>
         ))}
       </div>
-    </OfficeUIContext.Provider>
+    </SiteFinanceUIContext.Provider>
   );
 }

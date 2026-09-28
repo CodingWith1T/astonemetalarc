@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
 import { Office } from "./_lib/office-data";
 import { OfficeProvider } from "./_lib/OfficeContext";
 import { OfficeShell } from "./_components/OfficeShell";
-import { IconLocation } from "./_components/ui";
+import { IconLocation } from "@/app/admin/_lib/finance/ui";
 
 const NAV = [
   { label: "Overview", href: "/admin/office" },
@@ -32,43 +32,43 @@ export default function OfficeLayout({ children }: { children: ReactNode }) {
   return (
     <OfficeProvider>
       <OfficeShell>
-        <div className="of-shell">
-          <div className="of-office-strip">
-            <div className="of-office-strip-left">
-              <span className="of-office-pin">
+        <div className="fin-shell">
+          <div className="fin-office-strip">
+            <div className="fin-office-strip-left">
+              <span className="fin-office-pin">
                 <IconLocation size={14} />
               </span>
-              <span className="of-office-banner">{Office.banner}</span>
-              <span className="of-office-currency">Currency · Indian Rupee (₹)</span>
+              <span className="fin-office-banner">{Office.banner}</span>
+              <span className="fin-office-currency">Currency · Indian Rupee (₹)</span>
             </div>
-            <div className="of-office-strip-right">
-              <span className="of-single-office-tag">Single office — no location selector</span>
-              <span className="of-month-tag">{Office.month}</span>
+            <div className="fin-office-strip-right">
+              <span className="fin-single-office-tag">Single office — no location selector</span>
+              <span className="fin-month-tag">{Office.month}</span>
             </div>
           </div>
 
-          <nav className="of-subnav">
+          <nav className="fin-subnav">
             {NAV.map((item) => {
               const active = item.href === "/admin/office" ? pathname === item.href : pathname.startsWith(item.href);
               return (
-                <Link key={item.href} href={item.href} className={`of-subnav-link${active ? " active" : ""}`}>
+                <Link key={item.href} href={item.href} className={`fin-subnav-link${active ? " active" : ""}`}>
                   {item.label}
                 </Link>
               );
             })}
-            <span className="of-subnav-sep" />
+            <span className="fin-subnav-sep" />
             {SUB_NAV.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`of-subnav-link of-subnav-link-sub${pathname.startsWith(item.href) ? " active" : ""}`}
+                className={`fin-subnav-link fin-subnav-link-sub${pathname.startsWith(item.href) ? " active" : ""}`}
               >
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          <main className="of-main">{children}</main>
+          <main className="fin-main">{children}</main>
         </div>
       </OfficeShell>
     </OfficeProvider>

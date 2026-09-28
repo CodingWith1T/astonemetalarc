@@ -14,8 +14,8 @@ import {
   TotalsFooter,
   useTableControls,
   type FilterDef,
-} from "../../_components/table-kit";
-import { DetailRow, Drawer, EmptyState, IconBuilding, IconPlus, IconScale, IconStore, StatusBadge } from "../../_components/ui";
+} from "@/app/admin/_lib/finance/table-kit";
+import { DetailRow, Drawer, EmptyState, IconBuilding, IconPlus, IconScale, IconStore, StatusBadge } from "@/app/admin/_lib/finance/ui";
 
 const FILTERS: FilterDef[] = [
   {
@@ -57,18 +57,18 @@ export default function OfficeVendorsClient() {
   const totalOutstanding = vendors.reduce((s, v) => s + outstandingOf(v), 0);
 
   return (
-    <div className="of-page">
+    <div className="fin-page">
       <PageHead
         title="Office Vendors"
         subtitle={`${Office.shortName} · Vendors, suppliers and service providers`}
         actions={
-          <button className="of-btn of-btn-primary" onClick={() => open("vendor")}>
+          <button className="fin-btn fin-btn-primary" onClick={() => open("vendor")}>
             <IconPlus /> Add Vendor
           </button>
         }
       />
 
-      <div className="of-stats of-stats-3">
+      <div className="fin-stats fin-stats-3">
         <StatCard label="Total Vendors" value={String(vendors.length)} icon={<IconBuilding size={18} />} sub="Office vendor register" />
         <StatCard label="Total Paid" value={formatINR(totalPaid)} icon={<IconStore size={18} />} sub="Across all vendors" />
         <StatCard label="Outstanding" value={formatINR(totalOutstanding)} icon={<IconScale size={18} />} sub="Pending payables" />
@@ -76,18 +76,18 @@ export default function OfficeVendorsClient() {
 
       <FiltersBar controls={controls} filters={FILTERS} />
 
-      <div className="of-table-wrap">
-        <div className="of-table-scroll">
-          <table className="of-table">
+      <div className="fin-table-wrap">
+        <div className="fin-table-scroll">
+          <table className="fin-table">
             <thead>
               <tr>
                 <SortHeader label="Vendor" sortKey="name" controls={controls} />
                 <SortHeader label="Category" sortKey="category" controls={controls} />
                 <th>Contact</th>
-                <th className="of-th-right">Total Paid</th>
-                <th className="of-th-right">Outstanding</th>
+                <th className="fin-th-right">Total Paid</th>
+                <th className="fin-th-right">Outstanding</th>
                 <th>Status</th>
-                <th className="of-th-center">Actions</th>
+                <th className="fin-th-center">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -98,7 +98,7 @@ export default function OfficeVendorsClient() {
                       title="No vendors found"
                       message="No vendors match the current filters."
                       action={
-                        <button className="of-btn of-btn-primary" onClick={() => open("vendor")}>
+                        <button className="fin-btn fin-btn-primary" onClick={() => open("vendor")}>
                           <IconPlus /> Add Vendor
                         </button>
                       }
@@ -107,24 +107,24 @@ export default function OfficeVendorsClient() {
                 </tr>
               )}
               {rows.map(({ vendor, totalPaid: paid, outstanding }) => (
-                <tr key={vendor.id} className="of-row-click" onClick={() => setViewing(vendor)}>
+                <tr key={vendor.id} className="fin-row-click" onClick={() => setViewing(vendor)}>
                   <td>
-                    <span className="of-cell-title">{vendor.name}</span>
-                    <span className="of-cell-sub">{vendor.gstNumber}</span>
+                    <span className="fin-cell-title">{vendor.name}</span>
+                    <span className="fin-cell-sub">{vendor.gstNumber}</span>
                   </td>
-                  <td><span className="of-chip">{vendor.category}</span></td>
+                  <td><span className="fin-chip">{vendor.category}</span></td>
                   <td>
-                    <span className="of-cell-title">{vendor.contactPerson}</span>
-                    <span className="of-cell-sub">{vendor.phone}</span>
+                    <span className="fin-cell-title">{vendor.contactPerson}</span>
+                    <span className="fin-cell-sub">{vendor.phone}</span>
                   </td>
-                  <td className="of-td-right"><AmountCell amount={paid} /></td>
-                  <td className="of-td-right">
-                    {outstanding > 0 ? <span className="of-amount out">{formatINR(outstanding)}</span> : <span className="of-muted">—</span>}
+                  <td className="fin-td-right"><AmountCell amount={paid} /></td>
+                  <td className="fin-td-right">
+                    {outstanding > 0 ? <span className="fin-amount out">{formatINR(outstanding)}</span> : <span className="fin-muted">—</span>}
                   </td>
                   <td><StatusBadge status={vendor.status} /></td>
-                  <td className="of-td-center">
+                  <td className="fin-td-center">
                     <button
-                      className="of-row-btn"
+                      className="fin-row-btn"
                       onClick={(e) => {
                         e.stopPropagation();
                         setViewing(vendor);
@@ -148,14 +148,14 @@ export default function OfficeVendorsClient() {
           subtitle={`${viewing.category} · ${viewing.status}`}
           onClose={() => setViewing(null)}
           footer={
-            <div className="of-drawer-actions">
-              <button className="of-btn of-btn-primary" onClick={() => setViewing(null)}>
+            <div className="fin-drawer-actions">
+              <button className="fin-btn fin-btn-primary" onClick={() => setViewing(null)}>
                 Close
               </button>
             </div>
           }
         >
-          <div className="of-profile-stats" style={{ borderRadius: 12, borderTop: "1px solid var(--of-border)" }}>
+          <div className="fin-profile-stats" style={{ borderRadius: 12, borderTop: "1px solid var(--fin-border)" }}>
             <div>
               <span>Total Paid</span>
               <strong>{formatINR(viewing.transactions.reduce((s, t) => s + t.amount, 0))}</strong>
@@ -166,10 +166,10 @@ export default function OfficeVendorsClient() {
             </div>
           </div>
 
-          <div className="of-section-title">
+          <div className="fin-section-title">
             <h3>Vendor Profile</h3>
           </div>
-          <div className="of-detail-list">
+          <div className="fin-detail-list">
             <DetailRow label="Vendor Name" value={viewing.name} />
             <DetailRow label="Category" value={viewing.category} />
             <DetailRow label="Contact Person" value={viewing.contactPerson} />
@@ -181,7 +181,7 @@ export default function OfficeVendorsClient() {
             <DetailRow label="Status" value={<StatusBadge status={viewing.status} />} />
           </div>
 
-          <div className="of-section-title">
+          <div className="fin-section-title">
             <h3>Transaction History</h3>
           </div>
           {viewing.transactions.length === 0 ? (
@@ -189,16 +189,16 @@ export default function OfficeVendorsClient() {
               <EmptyState title="No transactions" message="This vendor has no office payment history yet." />
             </Card>
           ) : (
-            <div className="of-profile-list of-vendor-tx">
+            <div className="fin-profile-list fin-vendor-tx">
               {viewing.transactions.map((t) => (
-                <div key={t.reference + t.date} className="of-vendor-tx-row">
+                <div key={t.reference + t.date} className="fin-vendor-tx-row">
                   <div>
                     <strong>{t.description}</strong>
                     <span>
                       {formatDate(t.date)} · {t.reference} · {t.mode}
                     </span>
                   </div>
-                  <span className="of-amount">{formatINR(t.amount)}</span>
+                  <span className="fin-amount">{formatINR(t.amount)}</span>
                 </div>
               ))}
             </div>

@@ -661,38 +661,21 @@ export const MONTHLY_SPEND = [
 /* Formatters & helpers                                                */
 /* ------------------------------------------------------------------ */
 
-export function formatINR(amount: number, withSign = false): string {
-  const abs = Math.abs(amount).toLocaleString("en-IN", { maximumFractionDigits: 0 });
-  if (withSign) {
-    if (amount > 0) return `+₹${abs}`;
-    if (amount < 0) return `−₹${abs}`;
-  }
-  return `₹${abs}`;
-}
+/* Currency/date formatting lives in the shared finance lib so that Office,
+   Sites and Procurement all render money identically. Re-exported here for
+   the many office components that already import from this module. */
+import { formatDateTime } from "@/app/admin/_lib/finance/format";
 
-export function formatCompactINR(amount: number): string {
-  const abs = Math.abs(amount);
-  if (abs >= 10000000) return `₹${(abs / 10000000).toFixed(2)} Cr`;
-  if (abs >= 100000) return `₹${(abs / 100000).toFixed(2)} L`;
-  if (abs >= 1000) return `₹${(abs / 1000).toFixed(1)} K`;
-  return `₹${abs}`;
-}
-
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-export function formatDate(iso: string): string {
-  const [y, m, d] = iso.split("-");
-  return `${d} ${MONTHS[Number(m) - 1]} ${y}`;
-}
-
-export function formatDateShort(iso: string): string {
-  const [, m, d] = iso.split("-");
-  return `${d} ${MONTHS[Number(m) - 1]}`;
-}
-
-export function formatDateTime(isoDate: string, time: string): string {
-  return `${formatDate(isoDate)} · ${time}`;
-}
+export {
+  formatINR,
+  formatCompactINR,
+  formatUSD,
+  formatMoney,
+  formatDate,
+  formatDateShort,
+  formatDateTime,
+  formatPercent,
+} from "@/app/admin/_lib/finance/format";
 
 export function isPendingStatus(status: ExpenseStatus | RequestStatus): boolean {
   return status === "Pending Approval" || status === "Submitted";
@@ -758,7 +741,7 @@ export function buildAuditTrail(
 }
 
 export function statusToneClass(status: string): string {
-  return `of-status of-status-${status.toLowerCase().replace(/\s+/g, "-")}`;
+  return `fin-status fin-status-${status.toLowerCase().replace(/\s+/g, "-")}`;
 }
 
 export const REPORTS = [

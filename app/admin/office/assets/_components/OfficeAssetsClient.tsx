@@ -14,8 +14,8 @@ import {
   TotalsFooter,
   useTableControls,
   type FilterDef,
-} from "../../_components/table-kit";
-import { DetailRow, Drawer, EmptyState, IconBox, IconPlus, IconScale, IconShield, StatusBadge } from "../../_components/ui";
+} from "@/app/admin/_lib/finance/table-kit";
+import { DetailRow, Drawer, EmptyState, IconBox, IconPlus, IconScale, IconShield, StatusBadge } from "@/app/admin/_lib/finance/ui";
 
 const FILTERS: FilterDef[] = [
   { key: "category", label: "Category", options: ["IT", "Equipment", "Furniture", "Vehicle", "Appliance", "Security"] },
@@ -40,18 +40,18 @@ export default function OfficeAssetsClient() {
   const activeCount = assets.filter((a) => a.status === "Active" || a.status === "Assigned").length;
 
   return (
-    <div className="of-page">
+    <div className="fin-page">
       <PageHead
         title="Office Assets"
         subtitle={`${Office.shortName} · Office asset register`}
         actions={
-          <button className="of-btn of-btn-primary" onClick={() => open("asset")}>
+          <button className="fin-btn fin-btn-primary" onClick={() => open("asset")}>
             <IconPlus /> Add Asset
           </button>
         }
       />
 
-      <div className="of-stats of-stats-4">
+      <div className="fin-stats fin-stats-4">
         <StatCard label="Total Assets" value={String(assets.length)} icon={<IconBox size={18} />} sub="Registered items" />
         <StatCard label="Total Value" value={formatINR(totalValue)} icon={<IconScale size={18} />} sub="Purchase cost basis" />
         <StatCard label="In Use" value={String(activeCount)} icon={<IconShield size={18} />} trend="Active or assigned" trendTone="up" />
@@ -66,9 +66,9 @@ export default function OfficeAssetsClient() {
 
       <FiltersBar controls={controls} filters={FILTERS} />
 
-      <div className="of-table-wrap">
-        <div className="of-table-scroll">
-          <table className="of-table">
+      <div className="fin-table-wrap">
+        <div className="fin-table-scroll">
+          <table className="fin-table">
             <thead>
               <tr>
                 <SortHeader label="Asset ID" sortKey="assetId" controls={controls} />
@@ -78,7 +78,7 @@ export default function OfficeAssetsClient() {
                 <SortHeader label="Purchase Date" sortKey="purchaseDate" controls={controls} />
                 <SortHeader label="Cost" sortKey="cost" controls={controls} align="right" />
                 <SortHeader label="Status" sortKey="status" controls={controls} />
-                <th className="of-th-center">Actions</th>
+                <th className="fin-th-center">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -89,7 +89,7 @@ export default function OfficeAssetsClient() {
                       title="No assets found"
                       message="No assets match the current filters."
                       action={
-                        <button className="of-btn of-btn-primary" onClick={() => open("asset")}>
+                        <button className="fin-btn fin-btn-primary" onClick={() => open("asset")}>
                           <IconPlus /> Add Asset
                         </button>
                       }
@@ -100,20 +100,20 @@ export default function OfficeAssetsClient() {
               {controls.pageRows.map((r) => {
                 const a = r as unknown as OfficeAsset;
                 return (
-                  <tr key={a.id} className="of-row-click" onClick={() => setViewing(a)}>
-                    <td className="of-mono">{a.assetId}</td>
+                  <tr key={a.id} className="fin-row-click" onClick={() => setViewing(a)}>
+                    <td className="fin-mono">{a.assetId}</td>
                     <td>
-                      <span className="of-cell-title">{a.name}</span>
-                      <span className="of-cell-sub">{a.serialNumber}</span>
+                      <span className="fin-cell-title">{a.name}</span>
+                      <span className="fin-cell-sub">{a.serialNumber}</span>
                     </td>
-                    <td><span className="of-chip">{a.category}</span></td>
+                    <td><span className="fin-chip">{a.category}</span></td>
                     <td>{a.assignedTo}</td>
-                    <td className="of-strong">{formatDate(a.purchaseDate)}</td>
-                    <td className="of-td-right"><AmountCell amount={a.cost} /></td>
+                    <td className="fin-strong">{formatDate(a.purchaseDate)}</td>
+                    <td className="fin-td-right"><AmountCell amount={a.cost} /></td>
                     <td><StatusBadge status={a.status} /></td>
-                    <td className="of-td-center">
+                    <td className="fin-td-center">
                       <button
-                        className="of-row-btn"
+                        className="fin-row-btn"
                         onClick={(e) => {
                           e.stopPropagation();
                           setViewing(a);
@@ -132,7 +132,7 @@ export default function OfficeAssetsClient() {
       </div>
 
       <Card title="Asset Status Definitions" subtitle="Lifecycle used across the office asset register">
-        <div className="of-cat-grid">
+        <div className="fin-cat-grid">
           {[
             ["Active", "In use by the office and available for daily work."],
             ["Assigned", "Issued to a specific employee and tracked against their name."],
@@ -141,7 +141,7 @@ export default function OfficeAssetsClient() {
             ["Lost", "Reported missing; audit trail is retained."],
             ["Disposed", "Written off or sold; kept in the register for history."],
           ].map(([s, d]) => (
-            <div key={s} className="of-cat-card">
+            <div key={s} className="fin-cat-card">
               <StatusBadge status={s} />
               <p style={{ marginTop: 8 }}>{d}</p>
             </div>
@@ -156,22 +156,22 @@ export default function OfficeAssetsClient() {
           subtitle={`${viewing.category} · ${viewing.status}`}
           onClose={() => setViewing(null)}
           footer={
-            <div className="of-drawer-actions">
-              <button className="of-btn of-btn-primary" onClick={() => setViewing(null)}>
+            <div className="fin-drawer-actions">
+              <button className="fin-btn fin-btn-primary" onClick={() => setViewing(null)}>
                 Close
               </button>
             </div>
           }
         >
-          <div className="of-drawer-hero">
+          <div className="fin-drawer-hero">
             <div>
-              <span className="of-drawer-hero-label">Purchase Cost</span>
-              <strong className="of-drawer-hero-amount">{formatINR(viewing.cost)}</strong>
+              <span className="fin-drawer-hero-label">Purchase Cost</span>
+              <strong className="fin-drawer-hero-amount">{formatINR(viewing.cost)}</strong>
             </div>
             <StatusBadge status={viewing.status} />
           </div>
 
-          <div className="of-detail-list">
+          <div className="fin-detail-list">
             <DetailRow label="Asset ID" value={viewing.assetId} />
             <DetailRow label="Asset Name" value={viewing.name} />
             <DetailRow label="Category" value={viewing.category} />
